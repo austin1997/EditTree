@@ -6,6 +6,8 @@ package editortrees;
 
 public class Node {
 	
+	
+	public static Node NULL_NODE = new Node(null);
 	enum Code {
 		SAME, LEFT, RIGHT;
 		// Used in the displayer and debug string
@@ -27,7 +29,7 @@ public class Node {
 	// we want to be able to test the results of the algorithms in addition to the
 	// "publicly visible" effects
 	
-	char element;            
+	Character element;            
 	Node left, right; // subtrees
 	int rank;         // inorder position of this node within its own subtree.
 	Code balance; 
@@ -41,12 +43,29 @@ public class Node {
 	
 	
 	public int height() {
+		if(this == NULL_NODE) return -1;
 		int left = this.left.height();
 		int right = this.right.height();
 		return left > right ? left + 1 : right + 1;
 	}
 	
-	
+
+
+
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param element
+	 */
+	public Node(Character element) {
+		super();
+		this.element = element;
+		this.left = NULL_NODE;
+		this.right = NULL_NODE;
+	}
+
+
 
 	/**
 	 * TODO Put here a description of what this constructor does.
@@ -55,7 +74,7 @@ public class Node {
 	 * @param left
 	 * @param right
 	 */
-	public Node(char element, Node left, Node right) {
+	public Node(Character element, Node left, Node right) {
 		super();
 		this.element = element;
 		this.left = left;
