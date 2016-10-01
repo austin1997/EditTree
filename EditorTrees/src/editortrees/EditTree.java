@@ -121,6 +121,8 @@ public class EditTree {
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
 
 	}
+	
+	
 
 	/**
 	 * MILESTONE 1

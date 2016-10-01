@@ -29,11 +29,11 @@ public class Node {
 	// we want to be able to test the results of the algorithms in addition to the
 	// "publicly visible" effects
 	
-	Character element;            
-	Node left, right; // subtrees
-	int rank;         // inorder position of this node within its own subtree.
-	Code balance; 
-	Node parent;  // You may want this field.
+	private Character element;            
+	private Node left, right; // subtrees
+	private int rank;         // inorder position of this node within its own subtree.
+	private Code balance; 
+	private Node parent;  // You may want this field.
 	// Feel free to add other fields that you find useful
 
 	// You will probably want to add several other methods
@@ -79,6 +79,22 @@ public class Node {
 		this.element = element;
 		this.left = left;
 		this.right = right;
+	}
+	
+	private Node rotateLeft(Node parent, Node child){
+		parent.right = child.left;
+		child.left = parent;
+		child.balance = Code.SAME;
+		parent.balance = Code.SAME;
+		return child;
+	}
+	
+	private Node rotateRight(Node parent, Node child){
+		parent.left = child.right;
+		child.right = parent;
+		child.balance = Code.SAME;
+		parent.balance = Code.SAME;
+		return child;
 	}
 
 	public int size() {
