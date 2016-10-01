@@ -95,7 +95,8 @@ public class Node {
 	}
 
 	public int size() {
-		return -1;
+		if (this == NULL_NODE) return 0;
+		return this.left.size() + this.right.size() + 1;
 	}
 
 
