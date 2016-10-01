@@ -6,13 +6,14 @@ package editortrees;
 public class EditTree {
 
 	private Node root;
+	private int rotationCount;
 
 	/**
 	 * MILESTONE 1
 	 * Construct an empty tree
 	 */
 	public EditTree() {
-		
+		this.root = Node.NULL_NODE;
 	}
 
 	/**
@@ -56,7 +57,11 @@ public class EditTree {
 	 * @return number of rotations since tree was created.
 	 */
 	public int totalRotationCount() {
-		return -1; // replace by a real calculation.
+		return this.rotationCount; // replace by a real calculation.
+	}
+	
+	public void increaseRotationCount (int n){
+		this.rotationCount += n;
 	}
 
 	/**

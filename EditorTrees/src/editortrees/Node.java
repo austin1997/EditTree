@@ -48,11 +48,6 @@ public class Node {
 		int right = this.right.height();
 		return left > right ? left + 1 : right + 1;
 	}
-	
-
-
-
-
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 *
@@ -116,7 +111,14 @@ public class Node {
 			return new Node(ch);
 		}
 		this.right = this.right.add(ch);
-		
+		if (this.balance.equals("=")) {
+			this.balance = Code.RIGHT;
+		}else if (this.balance.equals("\\")){
+			
+			return this.rotateLeft(this, this.right);
+		}else {
+			this.balance = Code.SAME;
+		}
 		return this;
 	}
 
