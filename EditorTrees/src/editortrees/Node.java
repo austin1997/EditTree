@@ -63,6 +63,7 @@ public class Node {
 		this.element = element;
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
+		this.balance = Code.SAME;
 	}
 
 
@@ -79,6 +80,7 @@ public class Node {
 		this.element = element;
 		this.left = left;
 		this.right = right;
+		this.balance = Code.SAME;
 	}
 	
 	private Node rotateLeft(Node parent, Node child){
@@ -102,9 +104,6 @@ public class Node {
 	}
 
 
-
-
-
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
@@ -117,6 +116,7 @@ public class Node {
 			return new Node(ch);
 		}
 		this.right = this.right.add(ch);
+		
 		return this;
 	}
 
