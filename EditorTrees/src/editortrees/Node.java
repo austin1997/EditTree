@@ -101,4 +101,23 @@ public class Node {
 		return -1;
 	}
 
+
+
+
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param ch
+	 * @return
+	 */
+	public Node add(char ch) {
+		// TODO Auto-generated method stub.
+		if(this == NULL_NODE) {
+			return new Node(ch);
+		}
+		this.right = this.right.add(ch);
+		return this;
+	}
+
 }
