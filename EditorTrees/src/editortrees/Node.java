@@ -30,7 +30,7 @@ public class Node {
 	// "publicly visible" effects
 	
 	private Character element;            
-	private Node left, right; // subtrees
+	Node left, right; // subtrees
 	private int rank;         // inorder position of this node within its own subtree.
 	private Code balance; 
 	private Node parent;  // You may want this field.
