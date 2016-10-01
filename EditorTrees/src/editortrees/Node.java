@@ -48,6 +48,40 @@ public class Node {
 		int right = this.right.height();
 		return left > right ? left + 1 : right + 1;
 	}
+	
+	
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param element
+	 * @param rank
+	 */
+	public Node(Character element, int rank) {
+		super();
+		this.element = element;
+		this.rank = rank;
+		this.left = NULL_NODE;
+		this.right = NULL_NODE;
+		this.balance = Code.SAME;
+	}
+
+
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param element
+	 * @param parent
+	 */
+	public Node(Character element, Node parent) {
+		super();
+		this.element = element;
+		this.parent = parent;
+		this.left = NULL_NODE;
+		this.right = NULL_NODE;
+		this.balance = Code.SAME;
+	}
+
+
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 *
@@ -109,7 +143,9 @@ public class Node {
 	public Node add(char ch) {
 		// TODO Auto-generated method stub.
 		if(this == NULL_NODE) {
-			return new Node(ch);
+			Node temp = new Node(ch, this);
+			temp.rank = this.rank + 1;
+			return temp;
 		}
 		this.right = this.right.add(ch);
 		if (this.balance.equals("=")) {
