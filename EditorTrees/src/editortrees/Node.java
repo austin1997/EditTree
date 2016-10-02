@@ -169,4 +169,17 @@ public class Node {
 		return this;
 	}
 
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param ch
+	 * @param pos
+	 * @return
+	 */
+	public Node add(char ch, int pos) {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
 }

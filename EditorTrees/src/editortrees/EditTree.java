@@ -131,6 +131,7 @@ public class EditTree {
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
 		if (pos >= this.size + 1 || pos < 0) new IndexOutOfBoundsException();
+		this.root = this.root.add(ch, pos);
 		this.size ++;
 	}
 	
