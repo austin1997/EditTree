@@ -117,23 +117,29 @@ public class Node {
 		this.rotateCount = 0;
 	}
 	
-	private Node rotateLeft(Node parent, Node child){
+	private static Node rotateLeft(Node parent, Node child){
+		child.parent = parent.parent;
+		parent.parent = child;
+		///////////////////////////
 		parent.right = child.left;
 		child.left = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		this.rotateCount ++;
-		this.parent.rotateCount = this.rotateCount;
+		child.rotateCount ++;
+//		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
 	
-	private Node rotateRight(Node parent, Node child){
+	private static Node rotateRight(Node parent, Node child){
+		child.parent = parent.parent;
+		parent.parent = child;
+		///////////////////////
 		parent.left = child.right;
 		child.right = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		this.rotateCount ++;
-		this.parent.rotateCount = this.rotateCount;
+		child.rotateCount ++;
+//		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
 
@@ -179,6 +185,42 @@ public class Node {
 	 */
 	public Node add(char ch, int pos) {
 		// TODO Auto-generated method stub.
+		if(this.rank == pos || this == NULL_NODE) return new Node(ch, this);
+		if(this.rank > pos) {
+			this.left = this.left.add(ch, pos);
+			
+		}
+		else {
+			this.right = this.right.add(ch, pos);
+			
+		}
+		
+		
+		return null;
+	}
+	
+	private Node rotateHandler(Node node, Code code){
+		if(code == Code.SAME) return this;
+		Code currentCode = node.balance;
+		if(currentCode.toString().equals("=")){
+			node.balance = code;
+			return this;
+		}else if (currentCode.toString().equals("\\")){
+			if (code == Code.LEFT) {
+				node.balance = Code.SAME;
+				return this;
+			}else{
+				Code temp = node.right.balance;
+				if(temp == Code.RIGHT){
+					
+				}
+			}
+			
+			
+		}else {
+			
+		}
+		
 		return null;
 	}
 
