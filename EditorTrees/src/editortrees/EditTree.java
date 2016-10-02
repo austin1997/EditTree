@@ -7,13 +7,15 @@ public class EditTree {
 
 	private Node root;
 	private int rotationCount;
-	
+	private int size;
 
 	/**
 	 * MILESTONE 1
 	 * Construct an empty tree
 	 */
 	public EditTree() {
+		this.size = 0;
+		this.rotationCount = 0;
 		this.root = Node.NULL_NODE;
 	}
 
@@ -24,7 +26,9 @@ public class EditTree {
 	 * @param ch
 	 */
 	public EditTree(char ch) {
-
+		this.root = new Node(ch);
+		this.size = 1;
+		this.rotationCount = 0;
 	}
 
 	/**
@@ -111,7 +115,8 @@ public class EditTree {
 		// 2. Unit tests are cumulative, and many things are based on add(), so
 		// make sure that you get this one correct.
 		this.root = this.root.add(ch);
-		
+		this.rotationCount = this.root.rotateCount;
+		this.size ++;
 		
 	}
 
@@ -125,7 +130,8 @@ public class EditTree {
 	 *             id pos is negative or too large for this tree
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
-
+		if (pos >= this.size + 1 || pos < 0) new IndexOutOfBoundsException();
+		this.size ++;
 	}
 	
 	

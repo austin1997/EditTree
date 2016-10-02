@@ -122,7 +122,8 @@ public class Node {
 		child.left = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		this.parent.rotateCount = this.rotateCount ++;
+		this.rotateCount ++;
+		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
 	
@@ -131,8 +132,8 @@ public class Node {
 		child.right = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		this.parent.rotateCount = this.rotateCount ++;
-		this.rotateCount = 0;
+		this.rotateCount ++;
+		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
 
