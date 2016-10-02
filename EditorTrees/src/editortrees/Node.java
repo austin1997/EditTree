@@ -167,7 +167,7 @@ public class Node {
 			this.balance = Code.RIGHT;
 		}else if (this.balance.equals("\\")){
 			
-			return this.rotateLeft(this, this.right);
+			return rotateLeft(this, this.right);
 		}else {
 			this.balance = Code.SAME;
 		}
@@ -200,19 +200,24 @@ public class Node {
 	}
 	
 	private Node rotateHandler(Node node, Code code){
-		if(code == Code.SAME) return this;
+		if(code == Code.SAME) {
+			this.rotateCount = this.left.rotateCount + this.right.rotateCount;
+			return this;
+		}
 		Code currentCode = node.balance;
 		if(currentCode.toString().equals("=")){
+			this.rotateCount = this.left.rotateCount + this.right.rotateCount;
 			node.balance = code;
 			return this;
 		}else if (currentCode.toString().equals("\\")){
 			if (code == Code.LEFT) {
+//				this.rotateCount = this.left.rotateCount + this.right.rotateCount;
 				node.balance = Code.SAME;
 				return this;
 			}else{
 				Code temp = node.right.balance;
 				if(temp == Code.RIGHT){
-					
+					Node root = rotateLeft(this, this.right);
 				}
 			}
 			
