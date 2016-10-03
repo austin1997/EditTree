@@ -161,7 +161,7 @@ public class Node {
 		Code temp = this.right.balance;
 		this.right = this.right.add(ch);
 		if(this.right.balance != temp && temp != Code.SAME && this.right.balance != Code.SAME){
-			this = rotateHandler(this, Code.RIGHT);
+			this.parent.right = rotateHandler(this, Code.RIGHT);
 		}
 		
 		return this;
