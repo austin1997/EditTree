@@ -29,7 +29,7 @@ public class Node {
 	// we want to be able to test the results of the algorithms in addition to the
 	// "publicly visible" effects
 	private EditTree tree;
-	private Character element;            
+	public Character element;            
 	Node left, right; // subtrees
 	private int rank;         // inorder position of this node within its own subtree.
 	private Code balance; 

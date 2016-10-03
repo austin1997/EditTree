@@ -1,5 +1,6 @@
 package editortrees;
 
+import java.util.Stack;
 
 // A height-balanced binary tree with rank that could be the basis for a text editor.
 
@@ -75,7 +76,31 @@ public class EditTree {
 	 */
 	@Override
 	public String toString() {
-		return null; // replace by a real calculation.
+		if(this.size <= 0) return ""; 
+		StringBuilder str = new StringBuilder();
+		Stack<Node> st = new Stack<Node>();
+		st.push(this.root);
+		int n = 0;
+		for (int i = 0; i < this.size; i++) {
+			if (st.peek() == this.root && n == 0) {
+				n++;
+				while (st.peek().left != Node.NULL_NODE) {
+					st.push(st.peek().left);
+				}
+			}
+			Node current = st.pop();
+			char out = current.element;
+			if (current.right != Node.NULL_NODE) {
+				Node temp = current.right;
+				st.push(temp);
+				while (temp.left != Node.NULL_NODE) {
+					temp = temp.left;
+					st.push(temp);
+				}
+			}
+			str.append(out);
+		}
+		return str.toString(); // replace by a real calculation.
 
 	}
 
@@ -96,6 +121,8 @@ public class EditTree {
 	 *         a pre-order traversal of the tree.
 	 */
 	public String toDebugString() {
+		
+		
 		return null;
 	}
 
