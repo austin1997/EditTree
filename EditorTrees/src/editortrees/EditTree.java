@@ -192,7 +192,7 @@ public class EditTree {
 	 * @return the number of nodes in this tree
 	 */
 	public int size() {
-		return this.root.size(); // replace by a real calculation.
+		return this.size; // replace by a real calculation.
 	}
 	
 	
