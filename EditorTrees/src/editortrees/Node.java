@@ -201,7 +201,6 @@ public class Node {
 			return this;
 		}else if (currentCode.toString().equals("\\")){
 			if (code == Code.LEFT) {
-//				this.rotateCount = this.left.rotateCount + this.right.rotateCount;
 				node.balance = Code.SAME;
 				return this;
 			}else{
