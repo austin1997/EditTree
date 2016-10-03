@@ -28,6 +28,7 @@ public class Node {
 	// The fields would normally be private, but for the purposes of this class, 
 	// we want to be able to test the results of the algorithms in addition to the
 	// "publicly visible" effects
+	private int increaseBy;
 	private EditTree tree;
 	public Character element;            
 	Node left, right; // subtrees
@@ -180,18 +181,40 @@ public class Node {
 	 */
 	public Node add(char ch, int pos) {
 		// TODO Auto-generated method stub.
-		if(this.rank == pos || this == NULL_NODE) return new Node(ch, this);
-		if(this.rank > pos) {
-			this.left = this.left.add(ch, pos);
-			
-		}
-		else {
-			this.right = this.right.add(ch, pos);
+		this.rank += this.increaseBy;
+		this.left.increaseBy += this.increaseBy;
+		this.right.increaseBy += this.right.increaseBy;
+		this.increaseBy = 0;
+		if (this.rank == pos){
+			this.rank ++;
+			if (this.right != NULL_NODE) {
+				this.right.increaseBy++;
+			}
+			if (this.left != NULL_NODE) {
+				this.left = this.left.add(ch, pos);
+			}else {
+				this.left = new Node(ch, this);
+				this.left.rank = pos;
+			}
+		}else if (this.rank < pos){
+			if(this.right == NULL_NODE) {
+				this.right = new Node(ch, this);
+				this.right.rank = pos;
+			}else{
+				this.right = this.right.add(ch, pos);
+			}
+		}else{
+			if(this.left == NULL_NODE){
+				this.left = new Node(ch, this);
+				this.left.rank = pos;
+			}else {
+				this.left = this.left.add(ch, pos);
+			}
 			
 		}
 		
 		
-		return null;
+		return this;
 	}
 	
 	private static Node rotateHandler(Node node, Code code){
