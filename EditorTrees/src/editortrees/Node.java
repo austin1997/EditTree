@@ -34,7 +34,6 @@ public class Node {
 	private int rank;         // inorder position of this node within its own subtree.
 	private Code balance; 
 	private Node parent;  // You may want this field.
-	public int rotateCount;
 	// Feel free to add other fields that you find useful
 
 	// You will probably want to add several other methods
@@ -64,7 +63,6 @@ public class Node {
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
-		this.rotateCount = 0;
 	}
 
 
@@ -81,7 +79,6 @@ public class Node {
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
-		this.rotateCount = 0;
 	}
 
 
@@ -96,7 +93,6 @@ public class Node {
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
-		this.rotateCount = 0;
 	}
 
 
@@ -114,7 +110,6 @@ public class Node {
 		this.left = left;
 		this.right = right;
 		this.balance = Code.SAME;
-		this.rotateCount = 0;
 	}
 	
 	private static Node rotateLeft(Node parent, Node child){
@@ -125,7 +120,6 @@ public class Node {
 		child.left = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		child.rotateCount ++;
 //		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
@@ -138,7 +132,6 @@ public class Node {
 		child.right = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		child.rotateCount ++;
 //		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
@@ -171,7 +164,6 @@ public class Node {
 		}else {
 			this.balance = Code.SAME;
 		}
-		this.parent.rotateCount = this.rotateCount;
 		return this;
 	}
 
@@ -201,12 +193,10 @@ public class Node {
 	
 	private Node rotateHandler(Node node, Code code){
 		if(code == Code.SAME) {
-			this.rotateCount = this.left.rotateCount + this.right.rotateCount;
 			return this;
 		}
 		Code currentCode = node.balance;
 		if(currentCode.toString().equals("=")){
-			this.rotateCount = this.left.rotateCount + this.right.rotateCount;
 			node.balance = code;
 			return this;
 		}else if (currentCode.toString().equals("\\")){
