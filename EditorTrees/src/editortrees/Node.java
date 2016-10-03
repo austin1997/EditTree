@@ -150,20 +150,20 @@ public class Node {
 	 */
 	public Node add(char ch) {
 		// TODO Auto-generated method stub.
-		if(this == NULL_NODE) {
+		if(this.right == NULL_NODE) {
 			Node temp = new Node(ch, this);
 			temp.rank = this.rank + 1;
-			return temp;
-		}
+			this.right = temp;
+			if(this.balance == Code.SAME) this.balance = Code.RIGHT;
+			else this.balance = Code.SAME;
+			return this;
+		} 
+		Code temp = this.right.balance;
 		this.right = this.right.add(ch);
-		if (this.balance.equals("=")) {
-			this.balance = Code.RIGHT;
-		}else if (this.balance.equals("\\")){
-			
-			return rotateLeft(this, this.right);
-		}else {
-			this.balance = Code.SAME;
+		if(this.right.balance != temp && temp != Code.SAME && this.right.balance != Code.SAME){
+			this = rotateHandler(this, Code.RIGHT);
 		}
+		
 		return this;
 	}
 
