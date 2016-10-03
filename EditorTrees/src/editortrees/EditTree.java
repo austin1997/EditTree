@@ -26,7 +26,7 @@ public class EditTree {
 	 * @param ch
 	 */
 	public EditTree(char ch) {
-		this.root = new Node(ch);
+		this.root = new Node(ch, this);
 		this.size = 1;
 		this.rotationCount = 0;
 	}
@@ -114,8 +114,12 @@ public class EditTree {
 		// you!
 		// 2. Unit tests are cumulative, and many things are based on add(), so
 		// make sure that you get this one correct.
+		if(this.size <= 0) {
+			this.root = new Node(ch, this);
+			this.size++;
+			return;
+		}
 		this.root = this.root.add(ch);
-		this.rotationCount = this.root.rotateCount;
 		this.size ++;
 		
 	}
@@ -153,7 +157,7 @@ public class EditTree {
 	 * @return the height of this tree
 	 */
 	public int height() {
-		return -2; // replace by a real calculation.
+		return this.root.height(); // replace by a real calculation.
 	}
 
 	/**

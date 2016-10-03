@@ -7,7 +7,7 @@ package editortrees;
 public class Node {
 	
 	
-	public static Node NULL_NODE = new Node(null);
+	public static Node NULL_NODE = new Node(null, -1);
 	enum Code {
 		SAME, LEFT, RIGHT;
 		// Used in the displayer and debug string
@@ -28,7 +28,7 @@ public class Node {
 	// The fields would normally be private, but for the purposes of this class, 
 	// we want to be able to test the results of the algorithms in addition to the
 	// "publicly visible" effects
-	
+	private EditTree tree;
 	private Character element;            
 	Node left, right; // subtrees
 	private int rank;         // inorder position of this node within its own subtree.
@@ -79,6 +79,7 @@ public class Node {
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
+		this.tree = this.parent.tree;
 	}
 
 
@@ -87,12 +88,14 @@ public class Node {
 	 *
 	 * @param element
 	 */
-	public Node(Character element) {
+	public Node(Character element, EditTree tree) {
 		super();
 		this.element = element;
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
+		this.rank = 0;
+		this.tree = tree;
 	}
 
 
@@ -160,8 +163,8 @@ public class Node {
 		} 
 		Code temp = this.right.balance;
 		this.right = this.right.add(ch);
-		if(this.right.balance != temp && temp != Code.SAME && this.right.balance != Code.SAME){
-			this.parent.right = rotateHandler(this, Code.RIGHT);
+		if(this.right.balance != temp && this.right.balance != Code.SAME){
+			return rotateHandler(this, Code.RIGHT);
 		}
 		
 		return this;
@@ -196,18 +199,21 @@ public class Node {
 			return node;
 		}
 		Code currentCode = node.balance;
+		
 		if(currentCode.toString().equals("=")){
 			node.balance = code;
 			return node;
-		}else if (currentCode.toString().equals("\\")){
+		}else if (currentCode == Code.RIGHT){
 			if (code == Code.LEFT) {
 				node.balance = Code.SAME;
 				return node;
 			}else{
 				Code temp = node.right.balance;
 				if(temp == Code.RIGHT){
+					node.tree.increaseRotationCount(1);
 					return rotateLeft(node, node.right);
 				}else {
+					node.tree.increaseRotationCount(1);
 					node.right = rotateRight(node.right, node.right.left);
 					return rotateLeft(node, node.right);
 				}
@@ -219,8 +225,10 @@ public class Node {
 			}else {
 				Code temp = node.left.balance;
 				if(temp == Code.LEFT){
+					node.tree.increaseRotationCount(1);
 					return rotateRight(node, node.left);
 				}else {
+					node.tree.increaseRotationCount(1);
 					node.left = rotateLeft(node.left, node.left.right);
 					return rotateRight(node, node.left);
 				}
