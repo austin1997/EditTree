@@ -191,31 +191,42 @@ public class Node {
 		return null;
 	}
 	
-	private Node rotateHandler(Node node, Code code){
+	private static Node rotateHandler(Node node, Code code){
 		if(code == Code.SAME) {
-			return this;
+			return node;
 		}
 		Code currentCode = node.balance;
 		if(currentCode.toString().equals("=")){
 			node.balance = code;
-			return this;
+			return node;
 		}else if (currentCode.toString().equals("\\")){
 			if (code == Code.LEFT) {
 				node.balance = Code.SAME;
-				return this;
+				return node;
 			}else{
 				Code temp = node.right.balance;
 				if(temp == Code.RIGHT){
-					Node root = rotateLeft(this, this.right);
+					return rotateLeft(node, node.right);
+				}else {
+					node.right = rotateRight(node.right, node.right.left);
+					return rotateLeft(node, node.right);
+				}
+			}
+		}else {
+			if (code == Code.RIGHT){
+				node.balance = Code.SAME;
+				return node;
+			}else {
+				Code temp = node.left.balance;
+				if(temp == Code.LEFT){
+					return rotateRight(node, node.left);
+				}else {
+					node.left = rotateLeft(node.left, node.left.right);
+					return rotateRight(node, node.left);
 				}
 			}
 			
-			
-		}else {
-			
 		}
-		
-		return null;
 	}
 
 }
