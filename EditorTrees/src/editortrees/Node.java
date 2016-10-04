@@ -154,6 +154,7 @@ public class Node {
 	 */
 	public Node add(char ch) {
 		// TODO Auto-generated method stub.
+		this.refreshRank();
 		if(this.right == NULL_NODE) {
 			Node temp = new Node(ch, this);
 			temp.rank = this.rank + 1;
@@ -194,27 +195,40 @@ public class Node {
 				this.right.increaseBy++;
 			}
 			if (this.left != NULL_NODE) {
+				Code temp = this.left.balance;
 				this.left = this.left.add(ch, pos);
-				return rotateHandler(this, Code.LEFT);
+				if (this.left.balance != temp && this.left.balance != Code.SAME) {
+					return rotateHandler(this, Code.LEFT);
+				}
 			}else {
 				this.left = new Node(ch, this);
+				this.balance = Code.LEFT;
 				this.left.rank = pos;
 			}
 		}else if (this.rank < pos){
 			if(this.right == NULL_NODE) {
 				this.right = new Node(ch, this);
 				this.right.rank = pos;
+				this.balance = Code.RIGHT;
+//				this.right.balance = Code.RIGHT;
 			}else{
+				Code temp = this.right.balance;
 				this.right = this.right.add(ch, pos);
-				return rotateHandler(this, Code.RIGHT);
+				if (this.right.balance != temp && this.right.balance != Code.SAME) {
+					return rotateHandler(this, Code.RIGHT);
+				}
 			}
 		}else{
 			if(this.left == NULL_NODE){
 				this.left = new Node(ch, this);
 				this.left.rank = pos;
+				this.balance = Code.LEFT;
 			}else {
+				Code temp = this.left.balance;
 				this.left = this.left.add(ch, pos);
-				return rotateHandler(this, Code.LEFT);
+				if (this.left.balance != temp && this.left.balance != Code.SAME) {
+					return rotateHandler(this, Code.LEFT);
+				}
 			}
 			
 		}
@@ -227,7 +241,7 @@ public class Node {
 		}
 		Code currentCode = node.balance;
 		
-		if(currentCode.toString().equals("=")){
+		if(currentCode == Code.SAME){
 			node.balance = code;
 			return node;
 		}else if (currentCode == Code.RIGHT){
@@ -240,7 +254,7 @@ public class Node {
 					node.tree.increaseRotationCount(1);
 					return rotateLeft(node, node.right);
 				}else {
-					node.tree.increaseRotationCount(1);
+					node.tree.increaseRotationCount(2);
 					node.right = rotateRight(node.right, node.right.left);
 					return rotateLeft(node, node.right);
 				}
@@ -255,7 +269,7 @@ public class Node {
 					node.tree.increaseRotationCount(1);
 					return rotateRight(node, node.left);
 				}else {
-					node.tree.increaseRotationCount(1);
+					node.tree.increaseRotationCount(2);
 					node.left = rotateLeft(node.left, node.left.right);
 					return rotateRight(node, node.left);
 				}
