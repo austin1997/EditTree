@@ -171,7 +171,13 @@ public class Node {
 		return this;
 	}
 
-
+	private void refreshRank(){
+		this.rank += this.increaseBy;
+		this.left.increaseBy += this.increaseBy;
+		this.right.increaseBy += this.right.increaseBy;
+		this.increaseBy = 0;
+	}
+	
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
@@ -181,10 +187,7 @@ public class Node {
 	 */
 	public Node add(char ch, int pos) {
 		// TODO Auto-generated method stub.
-		this.rank += this.increaseBy;
-		this.left.increaseBy += this.increaseBy;
-		this.right.increaseBy += this.right.increaseBy;
-		this.increaseBy = 0;
+		this.refreshRank();
 		if (this.rank == pos){
 			this.rank ++;
 			if (this.right != NULL_NODE) {
@@ -192,6 +195,7 @@ public class Node {
 			}
 			if (this.left != NULL_NODE) {
 				this.left = this.left.add(ch, pos);
+				return rotateHandler(this, Code.LEFT);
 			}else {
 				this.left = new Node(ch, this);
 				this.left.rank = pos;
@@ -202,6 +206,7 @@ public class Node {
 				this.right.rank = pos;
 			}else{
 				this.right = this.right.add(ch, pos);
+				return rotateHandler(this, Code.RIGHT);
 			}
 		}else{
 			if(this.left == NULL_NODE){
@@ -209,11 +214,10 @@ public class Node {
 				this.left.rank = pos;
 			}else {
 				this.left = this.left.add(ch, pos);
+				return rotateHandler(this, Code.LEFT);
 			}
 			
 		}
-		
-		
 		return this;
 	}
 	
