@@ -1,5 +1,7 @@
 package editortrees;
 
+import java.util.ArrayList;
+
 // A node in a height-balanced binary tree with rank.
 // Except for the NULL_NODE (if you choose to use one), one node cannot
 // belong to two different trees.
@@ -255,8 +257,8 @@ public class Node {
 					return rotateLeft(node, node.right);
 				}else {
 					node.tree.increaseRotationCount(2);
-					node.right = rotateRight(node.right, node.right.left);
-					return rotateLeft(node, node.right);
+//					node.right = rotateRight(node.right, node.right.left);
+					return doubleRotateLeft(node);
 				}
 			}
 		}else {
@@ -270,11 +272,65 @@ public class Node {
 					return rotateRight(node, node.left);
 				}else {
 					node.tree.increaseRotationCount(2);
-					node.left = rotateLeft(node.left, node.left.right);
-					return rotateRight(node, node.left);
+					return doubleRotateRight(node);
 				}
 			}
 			
+		}
+	}
+	
+	private static Node doubleRotateLeft(Node node){
+		Node A = node;
+		Node C = node.right;
+		Node B = C.left;
+		A.right = B.left;
+		C.left = B.right;
+		B.parent = A.parent;
+		A.parent = B;
+		C.parent = B;
+		if (B.balance == Code.LEFT){
+			A.balance = Code.SAME;
+			C.balance = Code.RIGHT;
+		}else if (B.balance == Code.RIGHT){
+			A.balance = Code.LEFT;
+			C.balance = Code.SAME;
+		}
+		B.balance = Code.SAME;
+		return B;
+	}
+	
+	private static Node doubleRotateRight(Node node){
+		Node A = node;
+		Node C = node.left;
+		Node B = C.right;
+		A.left = B.right;
+		C.right = B.left;
+		B.parent = A.parent;
+		A.parent = B;
+		C.parent = B;
+		if (B.balance == Code.LEFT){
+			C.balance = Code.SAME;
+			A.balance = Code.RIGHT;
+		}else if (B.balance == Code.RIGHT){
+			C.balance = Code.LEFT;
+			A.balance = Code.SAME;
+		}
+		B.balance = Code.SAME;
+		return B;
+	}
+	
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param arr
+	 */
+	public void toArrayList(ArrayList<Character> arr) {
+		// TODO Auto-generated method stub.
+		if(this == NULL_NODE) return;
+		else{
+			this.left.toArrayList(arr);
+			arr.add(this.element);
+			this.right.toArrayList(arr);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package editortrees;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 // A height-balanced binary tree with rank that could be the basis for a text editor.
@@ -121,9 +122,18 @@ public class EditTree {
 	 *         a pre-order traversal of the tree.
 	 */
 	public String toDebugString() {
+		String out = this.toArrayList().toString();
 		
 		
 		return null;
+	}
+	
+	public ArrayList<Character> toArrayList(){
+		ArrayList<Character> arr = new ArrayList<Character>();
+		this.root.toArrayList(arr);
+		return arr;
+		
+		
 	}
 
 	/**
