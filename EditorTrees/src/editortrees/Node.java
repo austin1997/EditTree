@@ -88,6 +88,7 @@ public class Node {
 	 * TODO Put here a description of what this constructor does.
 	 *
 	 * @param element
+	 * @param tree 
 	 */
 	public Node(Character element, EditTree tree) {
 		super();
@@ -139,11 +140,11 @@ public class Node {
 //		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
-
-	public int size() {
-		if (this == NULL_NODE) return 0;
-		return this.left.size() + this.right.size() + 1;
-	}
+//
+//	public int size() {
+//		if (this == NULL_NODE) return 0;
+//		return this.left.size() + this.right.size() + 1;
+//	}
 
 
 	/**
