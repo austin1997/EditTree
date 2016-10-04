@@ -296,6 +296,8 @@ public class Node {
 			C.balance = Code.SAME;
 		}
 		B.balance = Code.SAME;
+		B.left = A;
+		B.right = C;
 		return B;
 	}
 	
@@ -316,6 +318,8 @@ public class Node {
 			A.balance = Code.SAME;
 		}
 		B.balance = Code.SAME;
+		B.left = C;
+		B.right = A;
 		return B;
 	}
 	
