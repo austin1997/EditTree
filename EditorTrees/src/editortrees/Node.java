@@ -338,4 +338,17 @@ public class Node {
 		}
 	}
 
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public String toDebugString() {
+		// TODO Auto-generated method stub.
+		
+		
+		return "" + this.element + this.rank + this.balance.toString();
+	}
+
 }

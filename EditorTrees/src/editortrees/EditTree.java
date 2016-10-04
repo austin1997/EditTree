@@ -122,10 +122,22 @@ public class EditTree {
 	 *         a pre-order traversal of the tree.
 	 */
 	public String toDebugString() {
-		String out = this.toArrayList().toString();
+		if (this.size <= 0) return "[]";
+		StringBuilder str = new StringBuilder();
+		str.append("[");
+		Stack<Node> st = new Stack<Node>();
+		st.push(this.root);
+		while(!st.isEmpty()){
+			Node temp = st.pop();
+			if (temp == Node.NULL_NODE) continue;
+			str.append(temp.toDebugString());
+			str.append(", ");
+			st.push(temp.right);
+			st.push(temp.left);
+		}
+//		str = 
 		
-		
-		return null;
+		return str.substring(0, str.length() - 2) + "]";
 	}
 	
 	public ArrayList<Character> toArrayList(){
