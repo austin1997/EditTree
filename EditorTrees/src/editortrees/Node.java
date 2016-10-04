@@ -175,8 +175,8 @@ public class Node {
 
 	private void refreshRank(){
 		this.rank += this.increaseBy;
-		this.left.increaseBy += this.increaseBy;
-		this.right.increaseBy += this.right.increaseBy;
+		if (this.left != NULL_NODE) this.left.increaseBy += this.increaseBy;
+		if (this.right != NULL_NODE) this.right.increaseBy += this.right.increaseBy;
 		this.increaseBy = 0;
 	}
 	
