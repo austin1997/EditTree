@@ -210,7 +210,6 @@ public class Node {
 				this.right = new Node(ch, this);
 				this.right.rank = pos;
 				this.balance = Code.RIGHT;
-//				this.right.balance = Code.RIGHT;
 			}else{
 				Code temp = this.right.balance;
 				this.right = this.right.add(ch, pos);
