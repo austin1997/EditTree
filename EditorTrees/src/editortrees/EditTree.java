@@ -241,6 +241,7 @@ public class EditTree {
 		if (pos >= this.size || pos < 0) throw new IndexOutOfBoundsException();
 		char temp = this.root.get(pos);
 		this.root = this.root.delete(pos);
+		this.size --;
 		return temp; // replace by a real calculation.
 	}
 
