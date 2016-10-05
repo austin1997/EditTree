@@ -182,47 +182,74 @@ public class Node {
 	 */
 	public Node add(char ch, int pos) {
 		// TODO Auto-generated method stub.
-		if (this.rank == pos){
-			this.rank ++;
-//			if (this.right != NULL_NODE) {
-//				this.right.increaseBy++;
+//		if (this.rank == pos){
+//			this.rank ++;
+////			if (this.right != NULL_NODE) {
+////				this.right.increaseBy++;
+////			}
+//			if (this.left != NULL_NODE) {
+//				int tempPos = pos - this.rank - 1;
+//				Code temp = this.left.balance;
+//				this.left = this.left.add(ch, pos);
+//				if (this.left.balance != temp && this.left.balance != Code.SAME) {
+//					return rotateHandler(this, Code.LEFT);
+//				}
+//			}else {
+//				this.left = new Node(ch, this);
+//				this.balance = Code.LEFT;
+//				this.left.rank = pos;
 //			}
-			if (this.left != NULL_NODE) {
+//		}else if (this.rank < pos){
+//			if(this.right == NULL_NODE) {
+//				this.right = new Node(ch, this);
+//				this.right.rank = pos;
+//				this.balance = Code.RIGHT;
+//			}else{
+//				Code temp = this.right.balance;
+//				this.right = this.right.add(ch, pos);
+//				if (this.right.balance != temp && this.right.balance != Code.SAME) {
+//					return rotateHandler(this, Code.RIGHT);
+//				}
+//			}
+//		}else{
+//			if(this.left == NULL_NODE){
+//				this.left = new Node(ch, this);
+//				this.left.rank = pos;
+//				this.balance = Code.LEFT;
+//			}else {
+//				Code temp = this.left.balance;
+//				this.left = this.left.add(ch, pos);
+//				if (this.left.balance != temp && this.left.balance != Code.SAME) {
+//					return rotateHandler(this, Code.LEFT);
+//				}
+//			}
+//			
+//		}
+//		return this;
+		if(this.rank == pos){
+			this.rank ++;
+			if (this.left == NULL_NODE){
+				this.left = new Node(ch, this);
+				if(this.balance == Code.SAME) this.balance = Code.LEFT;
+				else this.balance = Code.SAME;
+				return this;
+			}else {
 				Code temp = this.left.balance;
 				this.left = this.left.add(ch, pos);
 				if (this.left.balance != temp && this.left.balance != Code.SAME) {
 					return rotateHandler(this, Code.LEFT);
-				}
-			}else {
-				this.left = new Node(ch, this);
-				this.balance = Code.LEFT;
-				this.left.rank = pos;
-			}
-		}else if (this.rank < pos){
-			if(this.right == NULL_NODE) {
-				this.right = new Node(ch, this);
-				this.right.rank = pos;
-				this.balance = Code.RIGHT;
-			}else{
-				Code temp = this.right.balance;
-				this.right = this.right.add(ch, pos);
-				if (this.right.balance != temp && this.right.balance != Code.SAME) {
-					return rotateHandler(this, Code.RIGHT);
 				}
 			}
 		}else{
-			if(this.left == NULL_NODE){
-				this.left = new Node(ch, this);
-				this.left.rank = pos;
-				this.balance = Code.LEFT;
+			if (pos - this.rank - 1 == 0){
+				return this.add(ch);
 			}else {
-				Code temp = this.left.balance;
-				this.left = this.left.add(ch, pos);
-				if (this.left.balance != temp && this.left.balance != Code.SAME) {
-					return rotateHandler(this, Code.LEFT);
+				Code temp = this.right.balance;
+				this.right = this.right.add(ch, pos - this.rank - 1);
+	 			if (this.right.balance != temp && this.right.balance != Code.SAME) {
+					return rotateHandler(this, Code.RIGHT);
 				}
 			}
-			
 		}
 		return this;
 	}
@@ -306,10 +333,15 @@ public class Node {
 		}else if (B.balance == Code.RIGHT){
 			C.balance = Code.LEFT;
 			A.balance = Code.SAME;
+		}else {
+			A.balance = Code.SAME;
+			C.balance = Code.SAME;
 		}
 		B.balance = Code.SAME;
 		B.left = C;
 		B.right = A;
+		A.rank = A.rank - B.rank - 1;
+		B.rank = C.rank + B.rank ;
 		return B;
 	}
 	
