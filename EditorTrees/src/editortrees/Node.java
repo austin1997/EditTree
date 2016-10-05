@@ -254,7 +254,7 @@ public class Node {
 		}else {
 			if (this.right == NULL_NODE) this.right = new Node(ch, this);
 			Code temp = this.right.balance;
-			this.right = this.right.add(ch, pos - this.rank);
+			this.right = this.right.add(ch, pos - this.rank - 1);
 			if (this.right.balance != temp && this.right.balance != Code.SAME) {
 				return rotateHandler(this, Code.RIGHT);
 			}
