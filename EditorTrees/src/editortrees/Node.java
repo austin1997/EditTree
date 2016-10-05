@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Node {
 	
 	
-	public static Node NULL_NODE = new Node(null, -1);
+	public static final Node NULL_NODE = new Node(null, -1);
 	enum Code {
 		SAME, LEFT, RIGHT;
 		// Used in the displayer and debug string
