@@ -431,12 +431,25 @@ public class Node {
 				char t = this.element;
 				this.element = temp.element;
 				temp.element = t;
-//				this.left = this.left.remove(t);
+//				int tempRank = this.rank;
+				this.rank = temp.rank;
+//				temp.rank = tempRank;
+//				this.left = this.left.delete(tempRank);
+				temp.delete();
 			}
 		}
 		return this;
 		
 //		return 0;
+	}
+	
+	private Node delete(){
+		if (this.left == NULL_NODE && this.right == NULL_NODE)
+			return NULL_NODE;
+		else if (this.left == NULL_NODE)
+			return this.right;
+		else 
+			return this.left;
 	}
 
 }
