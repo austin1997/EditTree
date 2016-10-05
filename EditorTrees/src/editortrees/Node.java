@@ -417,10 +417,14 @@ public class Node {
 			Code temp = this.left.balance;
 			this.left = this.left.delete(pos);
 			if (temp != Code.SAME && temp != this.left.balance){
-				
+				return rotateHandler(this, Code.RIGHT);
 			}
 		} else if (this.rank < pos) {
+			Code temp = this.right.balance;
 			this.right = this.right.delete(pos - this.rank - 1);
+			if (temp != Code.SAME && temp != this.right.balance){
+				return rotateHandler(this, Code.LEFT);
+			}
 		} else {
 			if (this.left == NULL_NODE && this.right == NULL_NODE)
 				return NULL_NODE;
@@ -434,9 +438,14 @@ public class Node {
 					temp = temp.right;
 				char t = this.element;
 				this.element = temp.element;
-				temp.element = t;
-				this.rank = this.rank - 1;
-				temp.parent.right = temp.delete();
+//				temp.element = t;
+//				this.rank = this.rank - 1;
+//				temp.parent.right = temp.delete();
+				Node out = this.delete(this.rank - 1);
+				
+				
+				this.rank --;
+				return out;
 			}
 		}
 		return this;
