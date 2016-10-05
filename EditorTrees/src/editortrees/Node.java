@@ -432,7 +432,7 @@ public class Node {
 				this.element = temp.element;
 				temp.element = t;
 				this.rank = this.rank - 1;
-				temp.delete();
+				temp.parent.right = temp.delete();
 			}
 		}
 		return this;
