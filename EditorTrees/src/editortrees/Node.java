@@ -321,10 +321,15 @@ public class Node {
 		}else if (B.balance == Code.RIGHT){
 			A.balance = Code.LEFT;
 			C.balance = Code.SAME;
+		}else {
+			A.balance = Code.SAME;
+			C.balance = Code.SAME;
 		}
 		B.balance = Code.SAME;
 		B.left = A;
 		B.right = C;
+		C.rank = C.rank - B.rank - 1;
+		B.rank += A.rank + 1;
 		return B;
 	}
 	
