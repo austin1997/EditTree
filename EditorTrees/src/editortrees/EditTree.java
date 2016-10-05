@@ -238,6 +238,8 @@ public class EditTree {
 		// node to be deleted with either its in-order successor or predecessor.
 		// The tests assume assume that you will replace it with the
 		// *successor*.
+		if (pos >= this.size || pos < 0) throw new IndexOutOfBoundsException();
+		
 		return '#'; // replace by a real calculation.
 	}
 
