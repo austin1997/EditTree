@@ -434,19 +434,23 @@ public class Node {
 			else if (this.right == NULL_NODE)
 				return this.left;
 			else {
-				Node temp = this.left;
-				while (temp.right != NULL_NODE)
-					temp = temp.right;
+				Node temp = this.right;
+				while (temp.left != NULL_NODE)
+					temp = temp.left;
 				char t = this.element;
 				this.element = temp.element;
 //				temp.element = t;
 //				this.rank = this.rank - 1;
 //				temp.parent.right = temp.delete();
 //				Node out = this.delete(this.rank - 1);
-				
+				Code tempCode = this.right.balance;
+				this.right = this.right.delete(0);
+				if ((tempCode != Code.SAME && tempCode != this.right.balance) || this.right == NULL_NODE){
+					return rotateHandler(this, Code.LEFT);
+				}
 				
 //				this.rank --;
-				return this.delete(this.rank - 1);
+//				return this.delete(this.rank - 1);
 			}
 		}
 		return this;
