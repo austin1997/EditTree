@@ -416,13 +416,14 @@ public class Node {
 		if (this.rank > pos) {
 			Code temp = this.left.balance;
 			this.left = this.left.delete(pos);
-			if (temp != Code.SAME && temp != this.left.balance){
+			if ((temp != Code.SAME && temp != this.left.balance) || this.left == NULL_NODE){
+				this.rank --;
 				return rotateHandler(this, Code.RIGHT);
 			}
 		} else if (this.rank < pos) {
 			Code temp = this.right.balance;
 			this.right = this.right.delete(pos - this.rank - 1);
-			if (temp != Code.SAME && temp != this.right.balance){
+			if ((temp != Code.SAME && temp != this.right.balance) || this.right == NULL_NODE){
 				return rotateHandler(this, Code.LEFT);
 			}
 		} else {
@@ -441,24 +442,24 @@ public class Node {
 //				temp.element = t;
 //				this.rank = this.rank - 1;
 //				temp.parent.right = temp.delete();
-				Node out = this.delete(this.rank - 1);
+//				Node out = this.delete(this.rank - 1);
 				
 				
-				this.rank --;
-				return out;
+//				this.rank --;
+				return this.delete(this.rank - 1);
 			}
 		}
 		return this;
 	}
 	
-	private Node delete(){
-		if (this.left == NULL_NODE && this.right == NULL_NODE)
-			return NULL_NODE;
-		else if (this.left == NULL_NODE)
-			return this.right;
-		else 
-			return this.left;
-	}
+//	private Node delete(){
+//		if (this.left == NULL_NODE && this.right == NULL_NODE)
+//			return NULL_NODE;
+//		else if (this.left == NULL_NODE)
+//			return this.right;
+//		else 
+//			return this.left;
+//	}
 
 //	private static Node balanceHandlerForDelete(Node node, Code from){
 //		if (from == Code.SAME) return node;
