@@ -2,6 +2,7 @@ package editortrees;
 
 import java.util.ArrayList;
 
+
 // A node in a height-balanced binary tree with rank.
 // Except for the NULL_NODE (if you choose to use one), one node cannot
 // belong to two different trees.
@@ -410,11 +411,32 @@ public class Node {
 	 * @param pos
 	 * @return
 	 */
-	public char delete(int pos) {
+	public Node delete(int pos) {
 		// TODO Auto-generated method stub.
+		if (this.rank > pos) {
+			this.left = this.left.delete(pos);
+		} else if (this.rank < pos) {
+			this.right = this.right.delete(pos - this.rank - 1);
+		} else {
+			if (this.left == NULL_NODE && this.right == this.NULL_NODE)
+				return NULL_NODE;
+			else if (this.left == NULL_NODE)
+				return this.right;
+			else if (this.right == this.NULL_NODE)
+				return this.left;
+			else {
+				Node temp = this.left;
+				while (temp.right != NULL_NODE)
+					temp = temp.right;
+				char t = this.element;
+				this.element = temp.element;
+				temp.element = t;
+//				this.left = this.left.remove(t);
+			}
+		}
+		return this;
 		
-		
-		return 0;
+//		return 0;
 	}
 
 }

@@ -239,8 +239,9 @@ public class EditTree {
 		// The tests assume assume that you will replace it with the
 		// *successor*.
 		if (pos >= this.size || pos < 0) throw new IndexOutOfBoundsException();
-		
-		return this.root.delete(pos); // replace by a real calculation.
+		char temp = this.root.get(pos);
+		this.root = this.root.delete(pos);
+		return temp; // replace by a real calculation.
 	}
 
 	/**
