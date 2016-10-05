@@ -422,7 +422,7 @@ public class Node {
 				return NULL_NODE;
 			else if (this.left == NULL_NODE)
 				return this.right;
-			else if (this.right == this.NULL_NODE)
+			else if (this.right == NULL_NODE)
 				return this.left;
 			else {
 				Node temp = this.left;
