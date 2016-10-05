@@ -355,8 +355,8 @@ public class Node {
 		B.balance = Code.SAME;
 		B.left = C;
 		B.right = A;
-		A.rank = A.rank - B.rank - 1;
-		B.rank = C.rank + B.rank ;
+		A.rank = A.rank - C.rank - B.rank - 2;
+		B.rank = C.rank + B.rank + 1;
 		return B;
 	}
 	
