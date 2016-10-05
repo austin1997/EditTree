@@ -183,7 +183,7 @@ public class EditTree {
 	 *             id pos is negative or too large for this tree
 	 */
 	public void add(char ch, int pos) throws IndexOutOfBoundsException {
-		if (pos >= this.size + 1 || pos < 0) new IndexOutOfBoundsException();
+		if (pos > this.size || pos < 0) throw new IndexOutOfBoundsException();
 		if (pos == this.size) {
 			this.add(ch);
 			return;
