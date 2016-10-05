@@ -119,6 +119,7 @@ public class Node {
 	}
 	
 	private static Node rotateLeft(Node parent, Node child){
+		child.left.parent = parent;
 		child.parent = parent.parent;
 		parent.parent = child;
 		///////////////////////////
@@ -126,11 +127,12 @@ public class Node {
 		child.left = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-//		this.parent.rotateCount = this.rotateCount;
+		child.rank += parent.rank + 1;
 		return child;
 	}
 	
 	private static Node rotateRight(Node parent, Node child){
+		child.right.parent = parent;
 		child.parent = parent.parent;
 		parent.parent = child;
 		///////////////////////
@@ -138,6 +140,8 @@ public class Node {
 		child.right = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
+		parent.rank = parent.rank - child.rank;
+		
 		return child;
 	}
 //
@@ -157,7 +161,7 @@ public class Node {
 		// TODO Auto-generated method stub.
 		if(this.right == NULL_NODE) {
 			Node temp = new Node(ch, this);
-			temp.rank = this.rank + 1;
+//			temp.rank = this.rank + 1;
 			this.right = temp;
 			if(this.balance == Code.SAME) this.balance = Code.RIGHT;
 			else this.balance = Code.SAME;
@@ -240,15 +244,18 @@ public class Node {
 					return rotateHandler(this, Code.LEFT);
 				}
 			}
-		}else{
-			if (pos - this.rank - 1 == 0){
-				return this.add(ch);
-			}else {
-				Code temp = this.right.balance;
-				this.right = this.right.add(ch, pos - this.rank - 1);
-	 			if (this.right.balance != temp && this.right.balance != Code.SAME) {
-					return rotateHandler(this, Code.RIGHT);
-				}
+		}else if (this.rank > pos){
+			Code temp = this.left.balance;
+			this.left = this.left.add(ch, pos);
+			if (this.left.balance != temp && this.left.balance != Code.SAME) {
+				return rotateHandler(this, Code.LEFT);
+			}
+		}else {
+			if (this.right == NULL_NODE) this.right = new Node(ch, this);
+			Code temp = this.right.balance;
+			this.right = this.right.add(ch, pos - this.rank);
+			if (this.right.balance != temp && this.right.balance != Code.SAME) {
+				return rotateHandler(this, Code.RIGHT);
 			}
 		}
 		return this;
