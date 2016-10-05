@@ -252,7 +252,9 @@ public class Node {
 				return rotateHandler(this, Code.LEFT);
 			}
 		}else {
-			if (this.right == NULL_NODE) this.right = new Node(ch, this);
+			if (this.right == NULL_NODE) {
+				return this.add(ch);
+			}
 			Code temp = this.right.balance;
 			this.right = this.right.add(ch, pos - this.rank - 1);
 			if (this.right.balance != temp && this.right.balance != Code.SAME) {
