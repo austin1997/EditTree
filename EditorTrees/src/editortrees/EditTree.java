@@ -240,7 +240,7 @@ public class EditTree {
 		// *successor*.
 		if (pos >= this.size || pos < 0) throw new IndexOutOfBoundsException();
 		
-		return '#'; // replace by a real calculation.
+		return this.root.delete(pos); // replace by a real calculation.
 	}
 
 	/**

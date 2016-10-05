@@ -403,4 +403,18 @@ public class Node {
 		return this.right.get(pos - this.rank - 1);
 	}
 
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param pos
+	 * @return
+	 */
+	public char delete(int pos) {
+		// TODO Auto-generated method stub.
+		
+		
+		return 0;
+	}
+
 }
