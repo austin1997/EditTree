@@ -414,7 +414,11 @@ public class Node {
 	public Node delete(int pos) {
 		// TODO Auto-generated method stub.
 		if (this.rank > pos) {
+			Code temp = this.left.balance;
 			this.left = this.left.delete(pos);
+			if (temp != Code.SAME && temp != this.left.balance){
+				
+			}
 		} else if (this.rank < pos) {
 			this.right = this.right.delete(pos - this.rank - 1);
 		} else {
@@ -447,4 +451,12 @@ public class Node {
 			return this.left;
 	}
 
+	private static Node balanceHandlerForDelete(Node node, Code from){
+		if (from == Code.SAME) return node;
+		if (from == Code.LEFT) {
+			if (node.balance == Code.LEFT){
+				
+			}
+		}
+	}
 }
