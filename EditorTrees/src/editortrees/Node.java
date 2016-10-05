@@ -431,13 +431,11 @@ public class Node {
 				char t = this.element;
 				this.element = temp.element;
 				temp.element = t;
-				this.rank = temp.rank;
+				this.rank = this.rank - 1;
 				temp.delete();
 			}
 		}
 		return this;
-		
-//		return 0;
 	}
 	
 	private Node delete(){
