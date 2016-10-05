@@ -455,22 +455,5 @@ public class Node {
 		}
 		return this;
 	}
-	
-//	private Node delete(){
-//		if (this.left == NULL_NODE && this.right == NULL_NODE)
-//			return NULL_NODE;
-//		else if (this.left == NULL_NODE)
-//			return this.right;
-//		else 
-//			return this.left;
-//	}
 
-//	private static Node balanceHandlerForDelete(Node node, Code from){
-//		if (from == Code.SAME) return node;
-//		if (from == Code.LEFT) {
-//			if (node.balance == Code.LEFT){
-//				
-//			}
-//		}
-//	}
 }
