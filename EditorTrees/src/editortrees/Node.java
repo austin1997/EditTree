@@ -418,7 +418,7 @@ public class Node {
 		} else if (this.rank < pos) {
 			this.right = this.right.delete(pos - this.rank - 1);
 		} else {
-			if (this.left == NULL_NODE && this.right == this.NULL_NODE)
+			if (this.left == NULL_NODE && this.right == NULL_NODE)
 				return NULL_NODE;
 			else if (this.left == NULL_NODE)
 				return this.right;
