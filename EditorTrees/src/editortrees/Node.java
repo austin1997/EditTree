@@ -140,7 +140,7 @@ public class Node {
 		child.right = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-		parent.rank = parent.rank - child.rank;
+		parent.rank = parent.rank - child.rank - 1;
 		
 		return child;
 	}
@@ -245,6 +245,7 @@ public class Node {
 				}
 			}
 		}else if (this.rank > pos){
+			this.rank ++;
 			Code temp = this.left.balance;
 			this.left = this.left.add(ch, pos);
 			if (this.left.balance != temp && this.left.balance != Code.SAME) {
