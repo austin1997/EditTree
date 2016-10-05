@@ -431,10 +431,7 @@ public class Node {
 				char t = this.element;
 				this.element = temp.element;
 				temp.element = t;
-//				int tempRank = this.rank;
 				this.rank = temp.rank;
-//				temp.rank = tempRank;
-//				this.left = this.left.delete(tempRank);
 				temp.delete();
 			}
 		}
