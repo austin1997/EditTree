@@ -414,10 +414,11 @@ public class Node {
 	public Node delete(int pos) {
 		// TODO Auto-generated method stub.
 		if (this.rank > pos) {
+			this.rank --;
 			Code temp = this.left.balance;
 			this.left = this.left.delete(pos);
 			if ((temp != Code.SAME && temp != this.left.balance) || this.left == NULL_NODE){
-				this.rank --;
+				
 				return rotateHandler(this, Code.RIGHT);
 			}
 		} else if (this.rank < pos) {
