@@ -400,7 +400,7 @@ public class Node {
 		if (this.rank == pos) return this.element;
 		if (this.rank > pos) return this.left.get(pos);
 		
-		return this.right.get(pos - this.rank);
+		return this.right.get(pos - this.rank - 1);
 	}
 
 }
