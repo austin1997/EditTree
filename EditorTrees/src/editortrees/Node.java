@@ -30,7 +30,6 @@ public class Node {
 	// The fields would normally be private, but for the purposes of this class, 
 	// we want to be able to test the results of the algorithms in addition to the
 	// "publicly visible" effects
-	private int increaseBy;
 	private EditTree tree;
 	public Character element;            
 	Node left, right; // subtrees
@@ -139,7 +138,6 @@ public class Node {
 		child.right = parent;
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
-//		this.parent.rotateCount = this.rotateCount;
 		return child;
 	}
 //
@@ -157,7 +155,6 @@ public class Node {
 	 */
 	public Node add(char ch) {
 		// TODO Auto-generated method stub.
-		this.refreshRank();
 		if(this.right == NULL_NODE) {
 			Node temp = new Node(ch, this);
 			temp.rank = this.rank + 1;
@@ -175,12 +172,6 @@ public class Node {
 		return this;
 	}
 
-	private void refreshRank(){
-		this.rank += this.increaseBy;
-		if (this.left != NULL_NODE) this.left.increaseBy += this.increaseBy;
-		if (this.right != NULL_NODE) this.right.increaseBy += this.right.increaseBy;
-		this.increaseBy = 0;
-	}
 	
 	/**
 	 * TODO Put here a description of what this method does.
@@ -191,12 +182,11 @@ public class Node {
 	 */
 	public Node add(char ch, int pos) {
 		// TODO Auto-generated method stub.
-		this.refreshRank();
 		if (this.rank == pos){
 			this.rank ++;
-			if (this.right != NULL_NODE) {
-				this.right.increaseBy++;
-			}
+//			if (this.right != NULL_NODE) {
+//				this.right.increaseBy++;
+//			}
 			if (this.left != NULL_NODE) {
 				Code temp = this.left.balance;
 				this.left = this.left.add(ch, pos);
