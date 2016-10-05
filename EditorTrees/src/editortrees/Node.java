@@ -451,12 +451,12 @@ public class Node {
 			return this.left;
 	}
 
-	private static Node balanceHandlerForDelete(Node node, Code from){
-		if (from == Code.SAME) return node;
-		if (from == Code.LEFT) {
-			if (node.balance == Code.LEFT){
-				
-			}
-		}
-	}
+//	private static Node balanceHandlerForDelete(Node node, Code from){
+//		if (from == Code.SAME) return node;
+//		if (from == Code.LEFT) {
+//			if (node.balance == Code.LEFT){
+//				
+//			}
+//		}
+//	}
 }
