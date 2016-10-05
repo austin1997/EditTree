@@ -388,4 +388,19 @@ public class Node {
 		return "" + this.element + this.rank + this.balance.toString();
 	}
 
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param pos
+	 * @return
+	 */
+	public char get(int pos) {
+		// TODO Auto-generated method stub.
+		if (this.rank == pos) return this.element;
+		if (this.rank > pos) return this.left.get(pos);
+		
+		return this.right.get(pos - this.rank);
+	}
+
 }

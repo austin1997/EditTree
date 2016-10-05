@@ -203,7 +203,9 @@ public class EditTree {
 	 */
 	public char get(int pos) throws IndexOutOfBoundsException {
 		if (pos >= this.size || pos < 0) throw new IndexOutOfBoundsException();
-		return '%';
+		
+		
+		return this.root.get(pos);
 	}
 
 	/**
