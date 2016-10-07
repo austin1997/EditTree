@@ -46,7 +46,7 @@ public class Node {
 	
 	
 	public int height() {
-		if(this == NULL_NODE) return -1;
+		if(this == NULL_NODE) return 0;
 		int left = this.left.height();
 		int right = this.right.height();
 		return left > right ? left + 1 : right + 1;

@@ -41,8 +41,16 @@ public class EditTree {
 	 * @param e
 	 */
 	public EditTree(EditTree e) {
-
-		
+		if (e.size <= 0) {
+			this.root = Node.NULL_NODE; 
+			return;
+		}
+		this.root = new Node(e.get(0), this);
+		this.size = 1;
+		for (int i = 1; i < e.size(); i++){
+			this.add(e.get(i), i);
+		}
+		this.rotationCount = 0;
 	}
 
 	/**
@@ -214,7 +222,7 @@ public class EditTree {
 	 * @return the height of this tree
 	 */
 	public int height() {
-		return this.root.height(); // replace by a real calculation.
+		return this.root.height() - 1; // replace by a real calculation.
 	}
 
 	/**
