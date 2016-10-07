@@ -42,6 +42,7 @@ public class EditTree {
 	 */
 	public EditTree(EditTree e) {
 
+		
 	}
 
 	/**
