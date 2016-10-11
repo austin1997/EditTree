@@ -2,57 +2,55 @@ package editortrees;
 
 import java.util.ArrayList;
 
-
 // A node in a height-balanced binary tree with rank.
 // Except for the NULL_NODE (if you choose to use one), one node cannot
 // belong to two different trees.
 
 public class Node {
-	
-	
+
 	public static final Node NULL_NODE = new Node(null, -1);
+
 	enum Code {
 		SAME, LEFT, RIGHT;
 		// Used in the displayer and debug string
 		public String toString() {
 			switch (this) {
-				case LEFT:
-					return "/";
-				case SAME:
-					return "=";
-				case RIGHT:
-					return "\\";
-				default:
-					throw new IllegalStateException();
+			case LEFT:
+				return "/";
+			case SAME:
+				return "=";
+			case RIGHT:
+				return "\\";
+			default:
+				throw new IllegalStateException();
 			}
 		}
 	}
-	
-	// The fields would normally be private, but for the purposes of this class, 
-	// we want to be able to test the results of the algorithms in addition to the
+
+	// The fields would normally be private, but for the purposes of this class,
+	// we want to be able to test the results of the algorithms in addition to
+	// the
 	// "publicly visible" effects
 	private EditTree tree;
-	public Character element;            
+	public Character element;
 	Node left, right; // subtrees
-	private int rank;         // inorder position of this node within its own subtree.
-	private Code balance; 
-	private Node parent;  // You may want this field.
+	private int rank; // inorder position of this node within its own subtree.
+	private Code balance;
+	private Node parent; // You may want this field.
 	// Feel free to add other fields that you find useful
 
 	// You will probably want to add several other methods
 
-	// For the following methods, you should fill in the details so that they work correctly
-	
-	
-	
+	// For the following methods, you should fill in the details so that they
+	// work correctly
+
 	public int height() {
-		if(this == NULL_NODE) return 0;
-		int left = this.left.height();
-		int right = this.right.height();
-		return left > right ? left + 1 : right + 1;
+		if (this == NULL_NODE) {
+			return -1;
+		}
+		return 1 + Math.max(this.left.height(), this.right.height());
 	}
-	
-	
+
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 *
@@ -67,7 +65,6 @@ public class Node {
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
 	}
-
 
 	/**
 	 * TODO Put here a description of what this constructor does.
@@ -85,12 +82,11 @@ public class Node {
 		this.tree = this.parent.tree;
 	}
 
-
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 *
 	 * @param element
-	 * @param tree 
+	 * @param tree
 	 */
 	public Node(Character element, EditTree tree) {
 		super();
@@ -101,8 +97,6 @@ public class Node {
 		this.rank = 0;
 		this.tree = tree;
 	}
-
-
 
 	/**
 	 * TODO Put here a description of what this constructor does.
@@ -118,8 +112,8 @@ public class Node {
 		this.right = right;
 		this.balance = Code.SAME;
 	}
-	
-	private static Node rotateLeft(Node parent, Node child){
+
+	private static Node rotateLeft(Node parent, Node child) {
 		child.left.parent = parent;
 		child.parent = parent.parent;
 		parent.parent = child;
@@ -131,8 +125,8 @@ public class Node {
 		child.rank += parent.rank + 1;
 		return child;
 	}
-	
-	private static Node rotateRight(Node parent, Node child){
+
+	private static Node rotateRight(Node parent, Node child) {
 		child.right.parent = parent;
 		child.parent = parent.parent;
 		parent.parent = child;
@@ -142,15 +136,14 @@ public class Node {
 		child.balance = Code.SAME;
 		parent.balance = Code.SAME;
 		parent.rank = parent.rank - child.rank - 1;
-		
+
 		return child;
 	}
-//
-//	public int size() {
-//		if (this == NULL_NODE) return 0;
-//		return this.left.size() + this.right.size() + 1;
-//	}
-
+	//
+	// public int size() {
+	// if (this == NULL_NODE) return 0;
+	// return this.left.size() + this.right.size() + 1;
+	// }
 
 	/**
 	 * TODO Put here a description of what this method does.
@@ -160,24 +153,25 @@ public class Node {
 	 */
 	public Node add(char ch) {
 		// TODO Auto-generated method stub.
-		if(this.right == NULL_NODE) {
+		if (this.right == NULL_NODE) {
 			Node temp = new Node(ch, this);
-//			temp.rank = this.rank + 1;
+			// temp.rank = this.rank + 1;
 			this.right = temp;
-			if(this.balance == Code.SAME) this.balance = Code.RIGHT;
-			else this.balance = Code.SAME;
+			if (this.balance == Code.SAME)
+				this.balance = Code.RIGHT;
+			else
+				this.balance = Code.SAME;
 			return this;
-		} 
+		}
 		Code temp = this.right.balance;
 		this.right = this.right.add(ch);
-		if(this.right.balance != temp && this.right.balance != Code.SAME){
+		if (this.right.balance != temp && this.right.balance != Code.SAME) {
 			return rotateHandler(this, Code.RIGHT);
 		}
-		
+
 		return this;
 	}
 
-	
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
@@ -187,72 +181,74 @@ public class Node {
 	 */
 	public Node add(char ch, int pos) {
 		// TODO Auto-generated method stub.
-//		if (this.rank == pos){
-//			this.rank ++;
-////			if (this.right != NULL_NODE) {
-////				this.right.increaseBy++;
-////			}
-//			if (this.left != NULL_NODE) {
-//				int tempPos = pos - this.rank - 1;
-//				Code temp = this.left.balance;
-//				this.left = this.left.add(ch, pos);
-//				if (this.left.balance != temp && this.left.balance != Code.SAME) {
-//					return rotateHandler(this, Code.LEFT);
-//				}
-//			}else {
-//				this.left = new Node(ch, this);
-//				this.balance = Code.LEFT;
-//				this.left.rank = pos;
-//			}
-//		}else if (this.rank < pos){
-//			if(this.right == NULL_NODE) {
-//				this.right = new Node(ch, this);
-//				this.right.rank = pos;
-//				this.balance = Code.RIGHT;
-//			}else{
-//				Code temp = this.right.balance;
-//				this.right = this.right.add(ch, pos);
-//				if (this.right.balance != temp && this.right.balance != Code.SAME) {
-//					return rotateHandler(this, Code.RIGHT);
-//				}
-//			}
-//		}else{
-//			if(this.left == NULL_NODE){
-//				this.left = new Node(ch, this);
-//				this.left.rank = pos;
-//				this.balance = Code.LEFT;
-//			}else {
-//				Code temp = this.left.balance;
-//				this.left = this.left.add(ch, pos);
-//				if (this.left.balance != temp && this.left.balance != Code.SAME) {
-//					return rotateHandler(this, Code.LEFT);
-//				}
-//			}
-//			
-//		}
-//		return this;
-		if(this.rank == pos){
-			this.rank ++;
-			if (this.left == NULL_NODE){
+		// if (this.rank == pos){
+		// this.rank ++;
+		//// if (this.right != NULL_NODE) {
+		//// this.right.increaseBy++;
+		//// }
+		// if (this.left != NULL_NODE) {
+		// int tempPos = pos - this.rank - 1;
+		// Code temp = this.left.balance;
+		// this.left = this.left.add(ch, pos);
+		// if (this.left.balance != temp && this.left.balance != Code.SAME) {
+		// return rotateHandler(this, Code.LEFT);
+		// }
+		// }else {
+		// this.left = new Node(ch, this);
+		// this.balance = Code.LEFT;
+		// this.left.rank = pos;
+		// }
+		// }else if (this.rank < pos){
+		// if(this.right == NULL_NODE) {
+		// this.right = new Node(ch, this);
+		// this.right.rank = pos;
+		// this.balance = Code.RIGHT;
+		// }else{
+		// Code temp = this.right.balance;
+		// this.right = this.right.add(ch, pos);
+		// if (this.right.balance != temp && this.right.balance != Code.SAME) {
+		// return rotateHandler(this, Code.RIGHT);
+		// }
+		// }
+		// }else{
+		// if(this.left == NULL_NODE){
+		// this.left = new Node(ch, this);
+		// this.left.rank = pos;
+		// this.balance = Code.LEFT;
+		// }else {
+		// Code temp = this.left.balance;
+		// this.left = this.left.add(ch, pos);
+		// if (this.left.balance != temp && this.left.balance != Code.SAME) {
+		// return rotateHandler(this, Code.LEFT);
+		// }
+		// }
+		//
+		// }
+		// return this;
+		if (this.rank == pos) {
+			this.rank++;
+			if (this.left == NULL_NODE) {
 				this.left = new Node(ch, this);
-				if(this.balance == Code.SAME) this.balance = Code.LEFT;
-				else this.balance = Code.SAME;
+				if (this.balance == Code.SAME)
+					this.balance = Code.LEFT;
+				else
+					this.balance = Code.SAME;
 				return this;
-			}else {
+			} else {
 				Code temp = this.left.balance;
 				this.left = this.left.add(ch, pos);
 				if (this.left.balance != temp && this.left.balance != Code.SAME) {
 					return rotateHandler(this, Code.LEFT);
 				}
 			}
-		}else if (this.rank > pos){
-			this.rank ++;
+		} else if (this.rank > pos) {
+			this.rank++;
 			Code temp = this.left.balance;
 			this.left = this.left.add(ch, pos);
 			if (this.left.balance != temp && this.left.balance != Code.SAME) {
 				return rotateHandler(this, Code.LEFT);
 			}
-		}else {
+		} else {
 			if (this.right == NULL_NODE) {
 				return this.add(ch);
 			}
@@ -264,50 +260,50 @@ public class Node {
 		}
 		return this;
 	}
-	
-	private static Node rotateHandler(Node node, Code code){
-		if(code == Code.SAME) {
+
+	private static Node rotateHandler(Node node, Code code) {
+		if (code == Code.SAME) {
 			return node;
 		}
 		Code currentCode = node.balance;
-		
-		if(currentCode == Code.SAME){
+
+		if (currentCode == Code.SAME) {
 			node.balance = code;
 			return node;
-		}else if (currentCode == Code.RIGHT){
+		} else if (currentCode == Code.RIGHT) {
 			if (code == Code.LEFT) {
 				node.balance = Code.SAME;
 				return node;
-			}else{
+			} else {
 				Code temp = node.right.balance;
-				if(temp == Code.RIGHT){
+				if (temp == Code.RIGHT) {
 					node.tree.increaseRotationCount(1);
 					return rotateLeft(node, node.right);
-				}else {
+				} else {
 					node.tree.increaseRotationCount(2);
-//					node.right = rotateRight(node.right, node.right.left);
+					// node.right = rotateRight(node.right, node.right.left);
 					return doubleRotateLeft(node);
 				}
 			}
-		}else {
-			if (code == Code.RIGHT){
+		} else {
+			if (code == Code.RIGHT) {
 				node.balance = Code.SAME;
 				return node;
-			}else {
+			} else {
 				Code temp = node.left.balance;
-				if(temp == Code.LEFT){
+				if (temp == Code.LEFT) {
 					node.tree.increaseRotationCount(1);
 					return rotateRight(node, node.left);
-				}else {
+				} else {
 					node.tree.increaseRotationCount(2);
 					return doubleRotateRight(node);
 				}
 			}
-			
+
 		}
 	}
-	
-	private static Node doubleRotateLeft(Node node){
+
+	private static Node doubleRotateLeft(Node node) {
 		Node A = node;
 		Node C = node.right;
 		Node B = C.left;
@@ -316,13 +312,13 @@ public class Node {
 		B.parent = A.parent;
 		A.parent = B;
 		C.parent = B;
-		if (B.balance == Code.LEFT){
+		if (B.balance == Code.LEFT) {
 			A.balance = Code.SAME;
 			C.balance = Code.RIGHT;
-		}else if (B.balance == Code.RIGHT){
+		} else if (B.balance == Code.RIGHT) {
 			A.balance = Code.LEFT;
 			C.balance = Code.SAME;
-		}else {
+		} else {
 			A.balance = Code.SAME;
 			C.balance = Code.SAME;
 		}
@@ -333,8 +329,8 @@ public class Node {
 		B.rank += A.rank + 1;
 		return B;
 	}
-	
-	private static Node doubleRotateRight(Node node){
+
+	private static Node doubleRotateRight(Node node) {
 		Node A = node;
 		Node C = node.left;
 		Node B = C.right;
@@ -343,13 +339,13 @@ public class Node {
 		B.parent = A.parent;
 		A.parent = B;
 		C.parent = B;
-		if (B.balance == Code.LEFT){
+		if (B.balance == Code.LEFT) {
 			C.balance = Code.SAME;
 			A.balance = Code.RIGHT;
-		}else if (B.balance == Code.RIGHT){
+		} else if (B.balance == Code.RIGHT) {
 			C.balance = Code.LEFT;
 			A.balance = Code.SAME;
-		}else {
+		} else {
 			A.balance = Code.SAME;
 			C.balance = Code.SAME;
 		}
@@ -360,7 +356,7 @@ public class Node {
 		B.rank = C.rank + B.rank + 1;
 		return B;
 	}
-	
+
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
@@ -368,14 +364,21 @@ public class Node {
 	 */
 	public void toArrayList(ArrayList<Character> arr) {
 		// TODO Auto-generated method stub.
-		if(this == NULL_NODE) return;
-		else{
+		if (this == NULL_NODE)
+			return;
+		else {
 			this.left.toArrayList(arr);
 			arr.add(this.element);
 			this.right.toArrayList(arr);
 		}
 	}
 
+	@Override
+	public String toString() {
+		if (this == NULL_NODE)
+			return "";
+		return this.left.toString() + this.element + this.right.toString();
+	}
 
 	/**
 	 * TODO Put here a description of what this method does.
@@ -383,12 +386,11 @@ public class Node {
 	 * @return
 	 */
 	public String toDebugString() {
-		// TODO Auto-generated method stub.
-		
-		
-		return "" + this.element + this.rank + this.balance.toString();
+		if (this == NULL_NODE)
+			return "";
+		return ", " + this.element + this.rank + this.balance.toString() + this.left.toDebugString()
+				+ this.right.toDebugString();
 	}
-
 
 	/**
 	 * TODO Put here a description of what this method does.
@@ -398,12 +400,13 @@ public class Node {
 	 */
 	public char get(int pos) {
 		// TODO Auto-generated method stub.
-		if (this.rank == pos) return this.element;
-		if (this.rank > pos) return this.left.get(pos);
-		
+		if (this.rank == pos)
+			return this.element;
+		if (this.rank > pos)
+			return this.left.get(pos);
+
 		return this.right.get(pos - this.rank - 1);
 	}
-
 
 	/**
 	 * TODO Put here a description of what this method does.
@@ -414,17 +417,17 @@ public class Node {
 	public Node delete(int pos) {
 		// TODO Auto-generated method stub.
 		if (this.rank > pos) {
-			this.rank --;
+			this.rank--;
 			Code temp = this.left.balance;
 			this.left = this.left.delete(pos);
-			if ((temp != Code.SAME && temp != this.left.balance) || this.left == NULL_NODE){
-				
+			if ((temp != Code.SAME && temp != this.left.balance) || this.left == NULL_NODE) {
+
 				return rotateHandler(this, Code.RIGHT);
 			}
 		} else if (this.rank < pos) {
 			Code temp = this.right.balance;
 			this.right = this.right.delete(pos - this.rank - 1);
-			if ((temp != Code.SAME && temp != this.right.balance) || this.right == NULL_NODE){
+			if ((temp != Code.SAME && temp != this.right.balance) || this.right == NULL_NODE) {
 				return rotateHandler(this, Code.LEFT);
 			}
 		} else {
@@ -440,18 +443,18 @@ public class Node {
 					temp = temp.left;
 				char t = this.element;
 				this.element = temp.element;
-//				temp.element = t;
-//				this.rank = this.rank - 1;
-//				temp.parent.right = temp.delete();
-//				Node out = this.delete(this.rank - 1);
+				// temp.element = t;
+				// this.rank = this.rank - 1;
+				// temp.parent.right = temp.delete();
+				// Node out = this.delete(this.rank - 1);
 				Code tempCode = this.right.balance;
 				this.right = this.right.delete(0);
-				if ((tempCode != Code.SAME && tempCode != this.right.balance) || this.right == NULL_NODE){
+				if ((tempCode != Code.SAME && tempCode != this.right.balance) || this.right == NULL_NODE) {
 					return rotateHandler(this, Code.LEFT);
 				}
-				
-//				this.rank --;
-//				return this.delete(this.rank - 1);
+
+				// this.rank --;
+				// return this.delete(this.rank - 1);
 			}
 		}
 		return this;
