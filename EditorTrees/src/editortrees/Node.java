@@ -6,9 +6,14 @@ import java.util.ArrayList;
 // Except for the NULL_NODE (if you choose to use one), one node cannot
 // belong to two different trees.
 
+/**
+ * 
+ * @author Jacob Soehren, Shijun Yu, Zhihong Zhai 2016
+ *
+ */
 public class Node {
 
-	public static final Node NULL_NODE = new Node(null, -1);
+	public static final Node NULL_NODE = new Node();
 
 	enum Code {
 		SAME, LEFT, RIGHT;
@@ -34,7 +39,7 @@ public class Node {
 	private EditTree tree;
 	public Character element;
 	Node left, right; // subtrees
-	private int rank; // inorder position of this node within its own subtree.
+	private int rank; // in-order position of this node within its own subtree.
 	private Code balance;
 	private Node parent; // You may want this field.
 	// Feel free to add other fields that you find useful
@@ -44,30 +49,12 @@ public class Node {
 	// For the following methods, you should fill in the details so that they
 	// work correctly
 
-	public int height() {
-		if (this == NULL_NODE) {
-			return -1;
-		}
-		return 1 + Math.max(this.left.height(), this.right.height());
+	public Node() {
+		// empty constructor for NULL_NODE creation
 	}
 
 	/**
-	 * TODO Put here a description of what this constructor does.
-	 *
-	 * @param element
-	 * @param rank
-	 */
-	public Node(Character element, int rank) {
-		super();
-		this.element = element;
-		this.rank = rank;
-		this.left = NULL_NODE;
-		this.right = NULL_NODE;
-		this.balance = Code.SAME;
-	}
-
-	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Node constructor with element and parent Node as parameters
 	 *
 	 * @param element
 	 * @param parent
@@ -83,7 +70,7 @@ public class Node {
 	}
 
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * Node constructor with element and Editor Tree as parameters
 	 *
 	 * @param element
 	 * @param tree
@@ -98,21 +85,20 @@ public class Node {
 		this.tree = tree;
 	}
 
-	/**
-	 * TODO Put here a description of what this constructor does.
-	 *
-	 * @param element
-	 * @param left
-	 * @param right
-	 */
-	public Node(Character element, Node left, Node right) {
-		super();
-		this.element = element;
-		this.left = left;
-		this.right = right;
-		this.balance = Code.SAME;
+	public int height() {
+		if (this == NULL_NODE) {
+			return -1;
+		}
+		return 1 + Math.max(this.left.height(), this.right.height());
 	}
 
+	/**
+	 * perform the single left rotation and change the balance code and rank
+	 * 
+	 * @param parent
+	 * @param child
+	 * @return root of the new subtree
+	 */
 	private static Node rotateLeft(Node parent, Node child) {
 		child.left.parent = parent;
 		child.parent = parent.parent;
@@ -126,6 +112,13 @@ public class Node {
 		return child;
 	}
 
+	/**
+	 * perform the single right rotation and change the balance code and rank
+	 * 
+	 * @param parent
+	 * @param child
+	 * @return root of the new subtree
+	 */
 	private static Node rotateRight(Node parent, Node child) {
 		child.right.parent = parent;
 		child.parent = parent.parent;
@@ -139,23 +132,18 @@ public class Node {
 
 		return child;
 	}
-	//
-	// public int size() {
-	// if (this == NULL_NODE) return 0;
-	// return this.left.size() + this.right.size() + 1;
-	// }
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Create a new node with the given character and add it to the end of the
+	 * tree, also handle rebalance if necessary
 	 *
 	 * @param ch
-	 * @return
+	 * @return the root of the new tree
 	 */
 	public Node add(char ch) {
-		// TODO Auto-generated method stub.
+		// add to the right child of current Node
 		if (this.right == NULL_NODE) {
 			Node temp = new Node(ch, this);
-			// temp.rank = this.rank + 1;
 			this.right = temp;
 			if (this.balance == Code.SAME)
 				this.balance = Code.RIGHT;
@@ -164,68 +152,26 @@ public class Node {
 			return this;
 		}
 		Code temp = this.right.balance;
+		// recurse to the end of tree(position to add the Node)
 		this.right = this.right.add(ch);
+		// check balance and handle rotation if necessary
 		if (this.right.balance != temp && this.right.balance != Code.SAME) {
 			return rotateHandler(this, Code.RIGHT);
 		}
-
 		return this;
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Create a new node with the given character and add it to the given
+	 * position, also handle rebalance if necessary
 	 *
 	 * @param ch
 	 * @param pos
-	 * @return
+	 * @return the root of the new tree
 	 */
 	public Node add(char ch, int pos) {
-		// TODO Auto-generated method stub.
-		// if (this.rank == pos){
-		// this.rank ++;
-		//// if (this.right != NULL_NODE) {
-		//// this.right.increaseBy++;
-		//// }
-		// if (this.left != NULL_NODE) {
-		// int tempPos = pos - this.rank - 1;
-		// Code temp = this.left.balance;
-		// this.left = this.left.add(ch, pos);
-		// if (this.left.balance != temp && this.left.balance != Code.SAME) {
-		// return rotateHandler(this, Code.LEFT);
-		// }
-		// }else {
-		// this.left = new Node(ch, this);
-		// this.balance = Code.LEFT;
-		// this.left.rank = pos;
-		// }
-		// }else if (this.rank < pos){
-		// if(this.right == NULL_NODE) {
-		// this.right = new Node(ch, this);
-		// this.right.rank = pos;
-		// this.balance = Code.RIGHT;
-		// }else{
-		// Code temp = this.right.balance;
-		// this.right = this.right.add(ch, pos);
-		// if (this.right.balance != temp && this.right.balance != Code.SAME) {
-		// return rotateHandler(this, Code.RIGHT);
-		// }
-		// }
-		// }else{
-		// if(this.left == NULL_NODE){
-		// this.left = new Node(ch, this);
-		// this.left.rank = pos;
-		// this.balance = Code.LEFT;
-		// }else {
-		// Code temp = this.left.balance;
-		// this.left = this.left.add(ch, pos);
-		// if (this.left.balance != temp && this.left.balance != Code.SAME) {
-		// return rotateHandler(this, Code.LEFT);
-		// }
-		// }
-		//
-		// }
-		// return this;
-		if (this.rank == pos) {
+		// the position is at the 
+		if (this.rank == pos) { 
 			this.rank++;
 			if (this.left == NULL_NODE) {
 				this.left = new Node(ch, this);
@@ -236,7 +182,9 @@ public class Node {
 				return this;
 			} else {
 				Code temp = this.left.balance;
+				// recurse to the end of tree(position to add the Node)
 				this.left = this.left.add(ch, pos);
+				// check balance and handle rotation if necessary
 				if (this.left.balance != temp && this.left.balance != Code.SAME) {
 					return rotateHandler(this, Code.LEFT);
 				}
@@ -244,7 +192,9 @@ public class Node {
 		} else if (this.rank > pos) {
 			this.rank++;
 			Code temp = this.left.balance;
+			// recurse to the end of tree(position to add the Node)
 			this.left = this.left.add(ch, pos);
+			// check balance and handle rotation if necessary
 			if (this.left.balance != temp && this.left.balance != Code.SAME) {
 				return rotateHandler(this, Code.LEFT);
 			}
@@ -253,7 +203,9 @@ public class Node {
 				return this.add(ch);
 			}
 			Code temp = this.right.balance;
+			// recurse to the end of tree(position to add the Node)
 			this.right = this.right.add(ch, pos - this.rank - 1);
+			// check balance and handle rotation if necessary
 			if (this.right.balance != temp && this.right.balance != Code.SAME) {
 				return rotateHandler(this, Code.RIGHT);
 			}
@@ -261,22 +213,29 @@ public class Node {
 		return this;
 	}
 
+	/**
+	 * Handle the rotation needed for a given node
+	 * 
+	 * @param node the node needed to check
+	 * @param code the direction to tilt
+	 * @return the root of the new subtree
+	 */
 	private static Node rotateHandler(Node node, Code code) {
-		if (code == Code.SAME) {
+		if (code == Code.SAME) {// don't need to tilt
 			return node;
 		}
 		Code currentCode = node.balance;
 
-		if (currentCode == Code.SAME) {
+		if (currentCode == Code.SAME) { // currently not tilted
 			node.balance = code;
 			return node;
-		} else if (currentCode == Code.RIGHT) {
-			if (code == Code.LEFT) {
+		} else if (currentCode == Code.RIGHT) {// currently tilted right
+			if (code == Code.LEFT) { // need to tilt left
 				node.balance = Code.SAME;
 				return node;
-			} else {
+			} else { 
 				Code temp = node.right.balance;
-				if (temp == Code.RIGHT) {
+				if (temp == Code.RIGHT) { // check which rotation is needed
 					node.tree.increaseRotationCount(1);
 					return rotateLeft(node, node.right);
 				} else {
@@ -285,13 +244,13 @@ public class Node {
 					return doubleRotateLeft(node);
 				}
 			}
-		} else {
-			if (code == Code.RIGHT) {
+		} else { // currently tilted left
+			if (code == Code.RIGHT) {// need to tilt right
 				node.balance = Code.SAME;
 				return node;
 			} else {
 				Code temp = node.left.balance;
-				if (temp == Code.LEFT) {
+				if (temp == Code.LEFT) {// check which rotation is needed
 					node.tree.increaseRotationCount(1);
 					return rotateRight(node, node.left);
 				} else {
@@ -303,6 +262,12 @@ public class Node {
 		}
 	}
 
+	/**
+	 * double rotate left of a given node
+	 * 
+	 * @param node node that an imbalance occours
+	 * @return the root of the new subtree
+	 */
 	private static Node doubleRotateLeft(Node node) {
 		Node A = node;
 		Node C = node.right;
@@ -330,6 +295,12 @@ public class Node {
 		return B;
 	}
 
+	/**
+	 * double rotate right of a given node
+	 * 
+	 * @param node node that an imbalance occours
+	 * @return the root of the new subtree
+	 */
 	private static Node doubleRotateRight(Node node) {
 		Node A = node;
 		Node C = node.left;
@@ -357,7 +328,6 @@ public class Node {
 		return B;
 	}
 
-
 	@Override
 	public String toString() {
 		if (this == NULL_NODE)
@@ -365,11 +335,6 @@ public class Node {
 		return this.left.toString() + this.element + this.right.toString();
 	}
 
-	/**
-	 * TODO Put here a description of what this method does.
-	 *
-	 * @return
-	 */
 	public String toDebugString() {
 		if (this == NULL_NODE)
 			return "";
@@ -378,13 +343,12 @@ public class Node {
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Get the element of the node at the requested position.
 	 *
 	 * @param pos
 	 * @return
 	 */
 	public char get(int pos) {
-		// TODO Auto-generated method stub.
 		if (this.rank == pos)
 			return this.element;
 		if (this.rank > pos)
@@ -394,13 +358,12 @@ public class Node {
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Delete the node at the requested position.
 	 *
 	 * @param pos
-	 * @return
+	 * @return the element deleted
 	 */
 	public Node delete(int pos) {
-		// TODO Auto-generated method stub.
 		if (this.rank > pos) {
 			this.rank--;
 			Code temp = this.left.balance;
@@ -428,18 +391,11 @@ public class Node {
 					temp = temp.left;
 				char t = this.element;
 				this.element = temp.element;
-				// temp.element = t;
-				// this.rank = this.rank - 1;
-				// temp.parent.right = temp.delete();
-				// Node out = this.delete(this.rank - 1);
 				Code tempCode = this.right.balance;
 				this.right = this.right.delete(0);
 				if ((tempCode != Code.SAME && tempCode != this.right.balance) || this.right == NULL_NODE) {
 					return rotateHandler(this, Code.LEFT);
 				}
-
-				// this.rank --;
-				// return this.delete(this.rank - 1);
 			}
 		}
 		return this;
