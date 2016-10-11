@@ -104,13 +104,6 @@ public class EditTree {
 		return "[" + this.root.toDebugString().substring(2) + "]";
 	}
 
-	public ArrayList<Character> toArrayList() {
-		ArrayList<Character> arr = new ArrayList<Character>();
-		this.root.toArrayList(arr);
-		return arr;
-
-	}
-
 	/**
 	 * MILESTONE 1
 	 * 

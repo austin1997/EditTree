@@ -357,21 +357,6 @@ public class Node {
 		return B;
 	}
 
-	/**
-	 * TODO Put here a description of what this method does.
-	 *
-	 * @param arr
-	 */
-	public void toArrayList(ArrayList<Character> arr) {
-		// TODO Auto-generated method stub.
-		if (this == NULL_NODE)
-			return;
-		else {
-			this.left.toArrayList(arr);
-			arr.add(this.element);
-			this.right.toArrayList(arr);
-		}
-	}
 
 	@Override
 	public String toString() {
