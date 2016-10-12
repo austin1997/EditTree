@@ -106,8 +106,13 @@ public class Node {
 		///////////////////////////
 		parent.right = child.left;
 		child.left = parent;
-		child.balance = Code.SAME;
-		parent.balance = Code.SAME;
+		if (child.balance != Code.SAME) {
+			child.balance = Code.SAME;
+			parent.balance = Code.SAME;
+		}else {
+			child.balance = Code.LEFT;
+			parent.balance = Code.RIGHT;
+		}
 		child.rank += parent.rank + 1;
 		return child;
 	}
@@ -126,8 +131,13 @@ public class Node {
 		///////////////////////
 		parent.left = child.right;
 		child.right = parent;
-		child.balance = Code.SAME;
-		parent.balance = Code.SAME;
+		if (child.balance != Code.SAME) {
+			child.balance = Code.SAME;
+			parent.balance = Code.SAME;
+		}else {
+			child.balance = Code.RIGHT;
+			parent.balance = Code.LEFT;
+		}
 		parent.rank = parent.rank - child.rank - 1;
 
 		return child;
@@ -235,7 +245,7 @@ public class Node {
 				return node;
 			} else { 
 				Code temp = node.right.balance;
-				if (temp == Code.RIGHT) { // check which rotation is needed
+				if (temp == Code.RIGHT || temp == Code.SAME) { // check which rotation is needed
 					node.tree.increaseRotationCount(1);
 					return rotateLeft(node, node.right);
 				} else {
@@ -250,7 +260,7 @@ public class Node {
 				return node;
 			} else {
 				Code temp = node.left.balance;
-				if (temp == Code.LEFT) {// check which rotation is needed
+				if (temp == Code.LEFT || temp == Code.SAME) {// check which rotation is needed
 					node.tree.increaseRotationCount(1);
 					return rotateRight(node, node.left);
 				} else {
@@ -369,13 +379,14 @@ public class Node {
 			Code temp = this.left.balance;
 			this.left = this.left.delete(pos);
 			if ((temp != Code.SAME && temp != this.left.balance) || this.left == NULL_NODE) {
-
+				if (temp != Code.SAME && this.left.balance != Code.SAME) return this;
 				return rotateHandler(this, Code.RIGHT);
 			}
 		} else if (this.rank < pos) {
 			Code temp = this.right.balance;
 			this.right = this.right.delete(pos - this.rank - 1);
 			if ((temp != Code.SAME && temp != this.right.balance) || this.right == NULL_NODE) {
+				if (temp != Code.SAME && this.right.balance != Code.SAME) return this;
 				return rotateHandler(this, Code.LEFT);
 			}
 		} else {
@@ -394,6 +405,7 @@ public class Node {
 				Code tempCode = this.right.balance;
 				this.right = this.right.delete(0);
 				if ((tempCode != Code.SAME && tempCode != this.right.balance) || this.right == NULL_NODE) {
+					if (tempCode != Code.SAME && this.right.balance != Code.SAME) return this;
 					return rotateHandler(this, Code.LEFT);
 				}
 			}
