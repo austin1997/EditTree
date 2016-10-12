@@ -88,6 +88,7 @@ public class Node {
 		this.parent = parent;
 		this.left = NULL_NODE;
 		this.right = NULL_NODE;
+		this.tree = this.parent.tree;
 	}
 
 	/**
