@@ -39,8 +39,8 @@ public class Node {
 	private EditTree tree;
 	public Character element;
 	Node left, right; // subtrees
-	private int rank; // in-order position of this node within its own subtree.
-	private Code balance;
+	int rank; // in-order position of this node within its own subtree.
+	Code balance;
 	private Node parent; // You may want this field.
 	// Feel free to add other fields that you find useful
 
@@ -67,6 +67,27 @@ public class Node {
 		this.right = NULL_NODE;
 		this.balance = Code.SAME;
 		this.tree = this.parent.tree;
+	}
+
+	
+	
+	
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 * @param element
+	 * @param rank
+	 * @param balance
+	 * @param parent
+	 */
+	public Node(Character element, int rank, Code balance, Node parent) {
+		super();
+		this.element = element;
+		this.rank = rank;
+		this.balance = balance;
+		this.parent = parent;
+		this.left = NULL_NODE;
+		this.right = NULL_NODE;
 	}
 
 	/**

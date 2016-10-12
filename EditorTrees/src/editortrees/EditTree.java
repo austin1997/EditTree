@@ -3,6 +3,8 @@ package editortrees;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import org.omg.CORBA.Current;
+
 // A height-balanced binary tree with rank that could be the basis for a text editor.
 
 /**
@@ -47,10 +49,49 @@ public class EditTree {
 			this.root = Node.NULL_NODE;
 			return;
 		}
-		this.root = new Node(e.get(0), this);
-		this.size = 1;
-		for (int i = 1; i < e.size(); i++) {
-			this.add(e.get(i), i);
+//		this.root = new Node(e.root.element, this);
+//		int temp = e.root.rank;
+//		this.size = 1;
+//		for (int i = 0; i < e.size(); i++) {
+//			if (i == temp) continue;
+//			this.add(e.get(i), i);
+//		}
+		this.size = e.size;
+		Stack<Node> st1 = new Stack<Node>();
+		Stack<Node> st2 = new Stack<Node>();
+		this.root = new Node(e.root.element, this);
+		this.root.rank = e.root.rank;
+		this.root.balance = e.root.balance;
+		Node current1 = this.root;
+		Node current2 = e.root;
+		
+		for (int i = 0; i < this.size - 1; i++) {
+			if (current2.left == Node.NULL_NODE && current2.right == Node.NULL_NODE) {
+				try {
+					current2 = st2.pop();
+					current1 = st1.pop();
+					current1.right = new Node(current2.element, current2.rank, current2.balance, current1);
+					current1 = current1.right;
+				} catch (Exception EmptyStackException) {
+					// TODO Auto-generated catch-block stub.
+					return;
+				}
+
+			} else if (current2.left == Node.NULL_NODE) {
+				current2 = current2.right;
+				current1.right = new Node(current2.element, current2.rank, current2.balance, current1);
+				current1 = current1.right;
+			} else if (current2.right == Node.NULL_NODE) {
+				current2 = current2.left;
+				current1.left = new Node(current2.element, current2.rank, current2.balance, current1);
+				current1 = current1.left;
+			} else {
+				st2.push(current2.right);
+				st1.push(current1);
+				current2 = current2.left;
+				current1.left = new Node(current2.element, current2.rank, current2.balance, current1);
+				current1 = current1.left;
+			} 
 		}
 		this.rotationCount = 0;
 	}
