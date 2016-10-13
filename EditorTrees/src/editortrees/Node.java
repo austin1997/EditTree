@@ -435,4 +435,22 @@ public class Node {
 		return this;
 	}
 
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param s
+	 * @return
+	 */
+	public Node add(String s, EditTree tree) {
+		// TODO Auto-generated method stub.
+		if (s.length() <= 0) return NULL_NODE;
+		Node out = new Node(s.charAt(s.length() / 2), tree);
+		out.left = out.left.add(s.substring(0, s.length() / 2), tree);
+		out.right = out.right.add(s.substring(s.length() / 2 + 1), tree);
+		if(out.left != NULL_NODE) out.left.parent = this;
+		if(out.right != NULL_NODE) out.right.parent = this;
+		
+		return out;
+	}
+
 }

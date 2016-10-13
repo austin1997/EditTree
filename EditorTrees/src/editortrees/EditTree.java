@@ -104,7 +104,13 @@ public class EditTree {
 	 * @param s
 	 */
 	public EditTree(String s) {
-
+		if (s.length() <= 0){
+			this.root = Node.NULL_NODE;
+		}
+		this.root = Node.NULL_NODE;
+		this.root = this.root.add(s, this);
+		this.size = s.length();
+		this.rotationCount = 0;
 	}
 
 	/**
