@@ -215,8 +215,16 @@ public class EditTree {
 		if (pos >= this.size || pos < 0)
 			throw new IndexOutOfBoundsException();
 
+		return this.getNode(pos).element;
+	}
+	
+	private Node getNode(int pos) throws IndexOutOfBoundsException{
+		if (pos >= this.size || pos < 0)
+			throw new IndexOutOfBoundsException();
+
 		return this.root.get(pos);
 	}
+	
 
 	/**
 	 * MILESTONE 1
@@ -252,7 +260,7 @@ public class EditTree {
 		// *successor*.
 		if (pos >= this.size || pos < 0)
 			throw new IndexOutOfBoundsException();
-		char temp = this.root.get(pos);
+		char temp = this.root.get(pos).element;
 		this.root = this.root.delete(pos);
 		this.size--;
 		return temp; // replace by a real calculation.
@@ -273,7 +281,11 @@ public class EditTree {
 	 */
 	public String get(int pos, int length) throws IndexOutOfBoundsException {
 		if(pos + length > this.size || pos < 0) throw new IndexOutOfBoundsException();
-		return "";
+		StringBuilder str = new StringBuilder(length);
+		for(int i = pos; i < pos + length; i ++){
+			str.append(this.get(i));
+		}
+		return str.toString();
 	}
 
 	/**

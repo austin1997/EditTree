@@ -41,7 +41,7 @@ public class Node {
 	Node left, right; // subtrees
 	int rank; // in-order position of this node within its own subtree.
 	Code balance;
-	private Node parent; // You may want this field.
+	Node parent; // You may want this field.
 	// Feel free to add other fields that you find useful
 
 	// You will probably want to add several other methods
@@ -380,9 +380,9 @@ public class Node {
 	 * @param pos
 	 * @return
 	 */
-	public char get(int pos) {
+	public Node get(int pos) {
 		if (this.rank == pos)
-			return this.element;
+			return this;
 		if (this.rank > pos)
 			return this.left.get(pos);
 
