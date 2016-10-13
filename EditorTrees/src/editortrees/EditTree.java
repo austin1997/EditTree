@@ -272,6 +272,7 @@ public class EditTree {
 	 *             within this tree.
 	 */
 	public String get(int pos, int length) throws IndexOutOfBoundsException {
+		if(pos + length > this.size || pos < 0) throw new IndexOutOfBoundsException();
 		return "";
 	}
 
