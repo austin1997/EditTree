@@ -112,8 +112,8 @@ public class Node {
 			return -1;
 		}
 		if (this.balance == Code.RIGHT) return 1 + this.right.height();
-		if (this.balance == Code.LEFT) return 1 + this.left.height();
-		return 1 + Math.max(this.left.height(), this.right.height());
+		return 1 + this.left.height();
+		
 	}
 
 	/**
