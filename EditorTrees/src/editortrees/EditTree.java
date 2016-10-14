@@ -304,8 +304,8 @@ public class EditTree {
 		if (this == other) throw new IllegalArgumentException();
 		if (other.size <= 0) return;
 		int height = this.height();
-		if (this.root.balance == Code.SAME || this.root.balance == Code.RIGHT) height--;
-		else height -= 2;
+		
+		
 		this.root = this.root.concatenate(other, height, other.height());
 		other.root = Node.NULL_NODE;
 	}
