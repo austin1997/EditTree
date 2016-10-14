@@ -218,7 +218,7 @@ public class EditTree {
 		return this.getNode(pos).element;
 	}
 	
-	private Node getNode(int pos) throws IndexOutOfBoundsException{
+	public Node getNode(int pos) throws IndexOutOfBoundsException{
 		if (pos >= this.size || pos < 0)
 			throw new IndexOutOfBoundsException();
 
@@ -299,7 +299,9 @@ public class EditTree {
 	 *             if this == other
 	 */
 	public void concatenate(EditTree other) throws IllegalArgumentException {
-
+		if (this == other) throw new IllegalArgumentException();
+		this.root = this.root.concatenate(other);
+		other.root = Node.NULL_NODE;
 	}
 
 	/**

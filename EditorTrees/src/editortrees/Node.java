@@ -111,6 +111,8 @@ public class Node {
 		if (this == NULL_NODE) {
 			return -1;
 		}
+		if (this.balance == Code.RIGHT) return 1 + this.right.height();
+		if (this.balance == Code.LEFT) return 1 + this.left.height();
 		return 1 + Math.max(this.left.height(), this.right.height());
 	}
 
@@ -451,6 +453,34 @@ public class Node {
 		if(out.right != NULL_NODE) out.right.parent = this;
 		
 		return out;
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param other
+	 * @return
+	 */
+	public Node concatenate(EditTree other) {
+		// TODO Auto-generated method stub.
+		int height2 = other.height();
+		int height1 = this.height();
+		if (height1 - height2 == 1 || height1 - height2 == 0){
+			Node leftMost = other.getNode(0);
+			other.delete(0);
+			leftMost.right = other.getRoot();
+			leftMost.left = this;
+			leftMost.rank = this.tree.size();
+			// handle balance code
+			
+			
+			return leftMost;
+		}else{
+			this.right = this.right.concatenate(other);
+		}
+		
+		
+		return null;
 	}
 
 }
