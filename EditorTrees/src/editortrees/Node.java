@@ -2,6 +2,8 @@ package editortrees;
 
 import java.util.ArrayList;
 
+import editortrees.Node.Code;
+
 // A node in a height-balanced binary tree with rank.
 // Except for the NULL_NODE (if you choose to use one), one node cannot
 // belong to two different trees.
@@ -459,28 +461,41 @@ public class Node {
 	 * TODO Put here a description of what this method does.
 	 *
 	 * @param other
+	 * @param currentHeight 
+	 * @param otherHeight 
 	 * @return
 	 */
-	public Node concatenate(EditTree other) {
+	public Node concatenate(EditTree other, int currentHeight, int otherHeight) {
 		// TODO Auto-generated method stub.
-		int height2 = other.height();
-		int height1 = this.height();
-		if (height1 - height2 == 1 || height1 - height2 == 0){
+		if (currentHeight - otherHeight == 1 || currentHeight - otherHeight == 0){
 			Node leftMost = other.getNode(0);
+			Code previousCode = other.getRoot().balance;
 			other.delete(0);
 			leftMost.right = other.getRoot();
 			leftMost.left = this;
 			leftMost.rank = this.tree.size();
 			// handle balance code
-			
+			if (currentHeight - otherHeight == 1){
+				leftMost.balance = Code.LEFT;
+				if (previousCode != Code.SAME && other.getRoot().balance == Code.SAME){
+					return rotateHandler(leftMost, Code.LEFT);					
+				}
+			}else {
+				leftMost.balance = Code.SAME;
+				if (previousCode != Code.SAME && other.getRoot().balance == Code.SAME){
+					return rotateHandler(leftMost, Code.LEFT);					
+				}
+			}
 			
 			return leftMost;
 		}else{
-			this.right = this.right.concatenate(other);
+			if (this.balance == Code.SAME || this.balance == Code.RIGHT) currentHeight--;
+			else currentHeight -= 2;
+			this.right = this.right.concatenate(other, currentHeight, otherHeight);
 		}
 		
 		
-		return null;
+		return this;
 	}
 
 }

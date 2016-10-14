@@ -5,6 +5,8 @@ import java.util.Stack;
 
 import org.omg.CORBA.Current;
 
+import editortrees.Node.Code;
+
 // A height-balanced binary tree with rank that could be the basis for a text editor.
 
 /**
@@ -300,7 +302,11 @@ public class EditTree {
 	 */
 	public void concatenate(EditTree other) throws IllegalArgumentException {
 		if (this == other) throw new IllegalArgumentException();
-		this.root = this.root.concatenate(other);
+		if (other.size <= 0) return;
+		int height = this.height();
+		if (this.root.balance == Code.SAME || this.root.balance == Code.RIGHT) height--;
+		else height -= 2;
+		this.root = this.root.concatenate(other, height, other.height());
 		other.root = Node.NULL_NODE;
 	}
 
